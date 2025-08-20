@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneVersion": 3645,
+  "sceneVersion": 3648,
   "sceneSettings": {
     "environment": {
       "clearColor": [
@@ -396,11 +396,11 @@
       "physics": {
         "enabled": true,
         "type": "dynamic",
-        "mass": 100,
+        "mass": 1,
         "restitution": 0.3,
         "friction": 0,
         "impostor": "mesh",
-        "isCollider": true,
+        "isCollider": false,
         "isTrigger": false
       }
     },
@@ -437,7 +437,7 @@
         "restitution": 0.3,
         "friction": 0,
         "impostor": "convexHull",
-        "isCollider": true,
+        "isCollider": false,
         "isTrigger": false
       }
     },
