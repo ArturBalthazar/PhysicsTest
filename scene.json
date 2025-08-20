@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneVersion": 3648,
+  "sceneVersion": 3650,
   "sceneSettings": {
     "environment": {
       "clearColor": [
@@ -700,9 +700,9 @@
         "type": "static",
         "mass": 1,
         "restitution": 0.3,
-        "friction": 1,
+        "friction": 0.5,
         "impostor": "box",
-        "isCollider": true,
+        "isCollider": false,
         "isTrigger": false
       }
     },
