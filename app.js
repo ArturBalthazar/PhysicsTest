@@ -9,6 +9,10 @@
 
   // Make scene graph available to helper functions outside the try block scope
   let EXPORTED_SCENE_GRAPH = null;
+  
+  // Physics system variables
+  let ammoWorld = null;
+  let physicsPlugin = null;
 
   // Show loading
   function showLoading(message) {
@@ -131,6 +135,40 @@
     }
 
     showLoading('Creating scene objects...');
+    
+    // Initialize physics system early (like viewer.js does)
+    const physics = sceneGraph.sceneSettings?.physics;
+    if (physics && physics.enabled) {
+      showLoading('Initializing physics...');
+      try {
+        console.log('🔷 Early physics initialization (like reference project)...');
+        
+        if (typeof Ammo !== 'undefined') {
+          console.log('🔷 Initializing Ammo library...');
+          window.AmmoLib = await Ammo();
+          
+          console.log('🔷 Creating AmmoJS plugin...');
+          physicsPlugin = new BABYLON.AmmoJSPlugin();
+          
+          // Get the Ammo world for direct access
+          const gravity = new BABYLON.Vector3(
+            physics.gravity ? physics.gravity[0] : 0,
+            physics.gravity ? physics.gravity[1] : -9.81,
+            physics.gravity ? physics.gravity[2] : 0
+          );
+          scene.enablePhysics(gravity, physicsPlugin);
+          
+          // Store reference to Ammo world for raw colliders
+          ammoWorld = physicsPlugin.world;
+          
+          console.log('✅ AmmoJS plugin enabled (reference project pattern)');
+        } else {
+          console.warn('⚠️ Ammo.js not available, physics disabled');
+        }
+      } catch (error) {
+        console.error('❌ Failed to initialize physics:', error);
+      }
+    }
     
     // Instantiate scene from graph
     await instantiateGraph(sceneGraph, scene);
@@ -445,6 +483,12 @@
             cubeMaterial.metallic = 0.1;
             cubeMaterial.roughness = 0.3;
             mesh.material = cubeMaterial;
+            
+            // Apply physics if object has physics properties
+            if (node.physics && node.physics.enabled && scene.getPhysicsEngine()) {
+              console.log('🔷 Applying physics to cube:', node.physics.type, node.physics.impostor);
+              applyPhysicsToObject(mesh, node.physics, scene);
+            }
           } else if (node.id === 'ground') {
             mesh = BABYLON.MeshBuilder.CreateGround(node.id, { width: 6, height: 6 }, scene);
             mesh.position = position;
@@ -457,6 +501,12 @@
             groundMaterial.metallic = 0.0;
             groundMaterial.roughness = 0.8;
             mesh.material = groundMaterial;
+            
+            // Apply physics if object has physics properties
+            if (node.physics && node.physics.enabled && scene.getPhysicsEngine()) {
+              console.log('🔷 Applying physics to ground:', node.physics.type, node.physics.impostor);
+              applyPhysicsToObject(mesh, node.physics, scene);
+            }
           } else if (node.metadata && node.metadata.primitiveType) {
             // Handle primitive meshes created by addPrimitiveMesh
             const primitiveType = node.metadata.primitiveType;
@@ -495,6 +545,12 @@
               mesh.material = material;
               
               console.log('✅ Created ' + primitiveType + ' primitive in runtime:', node.id);
+              
+              // Apply physics if object has physics properties
+              if (node.physics && node.physics.enabled && scene.getPhysicsEngine()) {
+                console.log('🔷 Applying physics to ' + primitiveType + ':', node.physics.type, node.physics.impostor);
+                applyPhysicsToObject(mesh, node.physics, scene);
+              }
             }
           }
           
@@ -510,6 +566,15 @@
         case 'model':
           if (node.src) {
             await loadModelFromAssets(node, scene);
+            
+            // Apply physics if object has physics properties
+            if (node.physics && node.physics.enabled && scene.getPhysicsEngine()) {
+              console.log('🔷 Applying physics to model ' + node.name + ':', node.physics.type, node.physics.impostor);
+              const rootMesh = scene.getNodeById(node.id);
+              if (rootMesh) {
+                applyPhysicsToObject(rootMesh, node.physics, scene);
+              }
+            }
           }
           break;
 
@@ -1211,6 +1276,152 @@
     if (filename) return filename;
     // 4) Ultimate fallback: sanitize path without regex
     return pathStr.split('/').join('_').split('\\').join('_');
+  }
+
+  // Apply physics properties to a single object (from viewer.js)
+  function applyPhysicsToObject(babylonObject, physicsProps, scene) {
+    if (!babylonObject || !physicsProps) return;
+    
+    try {
+      // Remove existing impostor if any
+      if (babylonObject.physicsImpostor) {
+        babylonObject.physicsImpostor.dispose();
+        babylonObject.physicsImpostor = null;
+      }
+      
+      // Check if this should be a raw Ammo collider (for complex imported meshes marked as colliders)
+      if (physicsProps.isCollider && isImportedMesh(babylonObject)) {
+        console.log('🔷 Creating raw Ammo collider for imported mesh:', babylonObject.name);
+        createRawAmmoCollider(babylonObject, physicsProps);
+        return;
+      }
+      
+      // Map impostor types from our format to Babylon.js constants
+      const impostorTypeMap = {
+        'box': BABYLON.PhysicsImpostor.BoxImpostor,
+        'sphere': BABYLON.PhysicsImpostor.SphereImpostor,
+        'capsule': BABYLON.PhysicsImpostor.CapsuleImpostor,
+        'cylinder': BABYLON.PhysicsImpostor.CylinderImpostor,
+        'mesh': BABYLON.PhysicsImpostor.MeshImpostor,
+        'convexHull': BABYLON.PhysicsImpostor.ConvexHullImpostor
+      };
+      
+      const impostorType = impostorTypeMap[physicsProps.impostor] || BABYLON.PhysicsImpostor.BoxImpostor;
+      
+      // Set mass based on physics type
+      let mass = 0; // Default for static
+      if (physicsProps.type === 'dynamic') {
+        mass = physicsProps.mass || 1;
+      } else if (physicsProps.type === 'kinematic') {
+        mass = 0; // Kinematic bodies have 0 mass but can be moved
+      }
+      
+      // Create impostor options
+      const impostorOptions = {
+        mass: mass,
+        restitution: physicsProps.restitution || 0.3,
+        friction: physicsProps.friction || 0.5
+      };
+      
+      // Create physics impostor
+      babylonObject.physicsImpostor = new BABYLON.PhysicsImpostor(
+        babylonObject,
+        impostorType,
+        impostorOptions,
+        scene
+      );
+      
+      // Apply additional physics properties
+      if (physicsProps.isTrigger) {
+        // For triggers, disable collision response
+        const physicsBody = babylonObject.physicsImpostor.physicsBody;
+        if (physicsBody && physicsBody.setCollisionFlags) {
+          physicsBody.setCollisionFlags(4); // Trigger flag
+        }
+      }
+      
+      console.log('🔷 Created ' + physicsProps.type + ' ' + physicsProps.impostor + ' impostor with mass ' + mass);
+      
+    } catch (error) {
+      console.error('❌ Failed to apply physics to ' + babylonObject.name + ':', error);
+    }
+  }
+
+  // Check if a mesh is from an imported model (not a primitive)
+  function isImportedMesh(babylonObject) {
+    return (babylonObject.metadata && babylonObject.metadata.gltf) ||
+           babylonObject.name.includes('primitive') === false ||
+           babylonObject.parent !== null;
+  }
+
+  // Create a raw Ammo collider for complex imported meshes (like reference project)
+  function createRawAmmoCollider(babylonObject, physicsProps) {
+    if (!ammoWorld) {
+      console.error('❌ Cannot create raw Ammo collider: ammoWorld not available');
+      return;
+    }
+
+    try {
+      console.log('🔷 Creating raw Ammo collider for imported mesh:', babylonObject.name);
+      
+      // Refresh bounding info and get geometry data
+      babylonObject.refreshBoundingInfo();
+      const positions = babylonObject.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+      const indices = babylonObject.getIndices();
+
+      if (!positions || !indices) {
+        console.error('❌ ' + babylonObject.name + ' missing geometry data for collider');
+        return;
+      }
+
+      // Create Ammo triangle mesh (like reference project)
+      const ammoMesh = new Ammo.btTriangleMesh(true, true);
+      const scale = babylonObject.scaling;
+
+      // Add each triangle to the Ammo mesh
+      for (let i = 0; i < indices.length; i += 3) {
+        const i0 = indices[i] * 3;
+        const i1 = indices[i + 1] * 3;
+        const i2 = indices[i + 2] * 3;
+
+        // Create vertices with scaling applied (like reference project)
+        const v0 = new Ammo.btVector3(-positions[i0] * scale.x, positions[i0 + 1] * scale.y, positions[i0 + 2] * scale.z);
+        const v1 = new Ammo.btVector3(-positions[i1] * scale.x, positions[i1 + 1] * scale.y, positions[i1 + 2] * scale.z);
+        const v2 = new Ammo.btVector3(-positions[i2] * scale.x, positions[i2 + 1] * scale.y, positions[i2 + 2] * scale.z);
+
+        ammoMesh.addTriangle(v0, v1, v2, true);
+      }
+
+      // Create BVH triangle mesh shape
+      const shape = new Ammo.btBvhTriangleMeshShape(ammoMesh, true, true);
+      shape.setLocalScaling(new Ammo.btVector3(scale.x, scale.y, scale.z));
+
+      // Create transform
+      const transform = new Ammo.btTransform();
+      transform.setIdentity();
+      const origin = babylonObject.getAbsolutePosition();
+      transform.setOrigin(new Ammo.btVector3(origin.x, origin.y, origin.z));
+      transform.setRotation(new Ammo.btQuaternion(0, 0, 0, 1));
+
+      // Create rigid body (static collider)
+      const motionState = new Ammo.btDefaultMotionState(transform);
+      const localInertia = new Ammo.btVector3(0, 0, 0);
+      const mass = 0; // Static collider
+      const rbInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, shape, localInertia);
+      const body = new Ammo.btRigidBody(rbInfo);
+
+      // Add to physics world
+      ammoWorld.addRigidBody(body);
+
+      // Store reference for cleanup
+      babylonObject._ammoBody = body;
+      babylonObject._isRawAmmoCollider = true;
+
+      console.log('✅ Raw Ammo collider created for ' + babylonObject.name + ' with ' + (indices.length/3) + ' triangles');
+
+    } catch (error) {
+      console.error('❌ Failed to create raw Ammo collider for ' + babylonObject.name + ':', error);
+    }
   }
 
 })();
