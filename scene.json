@@ -1,0 +1,992 @@
+{
+  "version": 1,
+  "sceneVersion": 2558,
+  "sceneSettings": {
+    "environment": {
+      "clearColor": [
+        0.027450980392156862,
+        0.027450980392156862,
+        0.054901960784313725,
+        1
+      ],
+      "ambientColor": [
+        0,
+        0,
+        0
+      ],
+      "useIBL": false,
+      "iblPath": null,
+      "iblIntensity": 1,
+      "useSkybox": false,
+      "skyboxType": "none",
+      "skyboxPanoramaPath": null,
+      "skyboxMaterial": "fromIBL",
+      "skyboxTextures": {
+        "nx": null,
+        "ny": null,
+        "nz": null,
+        "px": null,
+        "py": null,
+        "pz": null
+      },
+      "fogMode": "none"
+    },
+    "imageProcessing": {
+      "contrast": 1,
+      "exposure": 1,
+      "toneMappingEnabled": false,
+      "toneMappingType": "standard",
+      "vignetteEnabled": false,
+      "vignetteWeight": 1,
+      "vignetteStretch": 0,
+      "vignetteFov": 1.5,
+      "vignetteColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "ditheringEnabled": false,
+      "ditheringIntensity": 0.5
+    },
+    "physics": {
+      "enabled": true,
+      "gravity": [
+        0,
+        -9.81,
+        0
+      ],
+      "useDeltaForWorldStep": true,
+      "fixedTimeStep": 0.0166667,
+      "iterations": 15,
+      "lockstepMaxSteps": 4,
+      "debug": false,
+      "timeStep": 10
+    }
+  },
+  "nodes": [
+    {
+      "id": "camera1",
+      "kind": "camera",
+      "name": "Camera",
+      "transform": {
+        "position": [
+          8.65,
+          5,
+          -8.65
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "enabled": true,
+      "camera": {
+        "type": "ArcRotate",
+        "active": true,
+        "minZ": 0.1,
+        "maxZ": 1000,
+        "fov": 0.7853981633974483,
+        "alpha": -2.277060083421162,
+        "beta": 1.0474842519211318,
+        "radius": 15.047332674109853,
+        "target": [
+          0,
+          0.49086952209472656,
+          0.0694437026977539
+        ],
+        "targetMode": "object",
+        "targetObject": "6cad4f93-5463-49dd-92fc-ca44ef83e914"
+      }
+    },
+    {
+      "id": "light1",
+      "kind": "light",
+      "name": "Light",
+      "transform": {
+        "position": [
+          0,
+          10,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "enabled": true,
+      "light": {
+        "type": "Hemispheric",
+        "intensity": 1,
+        "color": [
+          1,
+          1,
+          1
+        ],
+        "enabled": true,
+        "groundColor": [
+          0.3,
+          0.3,
+          0.3
+        ]
+      }
+    },
+    {
+      "id": "defaultCube",
+      "kind": "mesh",
+      "name": "Cube",
+      "transform": {
+        "position": [
+          0,
+          2.299576997756958,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "physics": {
+        "enabled": true,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "convexHull",
+        "isCollider": false,
+        "isTrigger": false
+      }
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive0-zv9h7e",
+      "kind": "mesh",
+      "name": "avaturn_look_0_primitive0",
+      "parentId": "root::avatar",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::avatar",
+        "sourceMeshName": "avaturn_look_0_primitive0"
+      },
+      "physics": {
+        "enabled": false,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "convexHull",
+        "isCollider": false,
+        "isTrigger": false
+      }
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive1-28khwb",
+      "kind": "mesh",
+      "name": "avaturn_look_0_primitive1",
+      "parentId": "root::avatar",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::avatar",
+        "sourceMeshName": "avaturn_look_0_primitive1"
+      },
+      "physics": {
+        "enabled": false,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "box",
+        "isCollider": false,
+        "isTrigger": false
+      }
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive2-rtk9ur",
+      "kind": "mesh",
+      "name": "avaturn_look_0_primitive2",
+      "parentId": "root::avatar",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::avatar",
+        "sourceMeshName": "avaturn_look_0_primitive2"
+      },
+      "physics": {
+        "enabled": false,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "box",
+        "isCollider": false,
+        "isTrigger": false
+      }
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive3-dz5uf3",
+      "kind": "mesh",
+      "name": "avaturn_look_0_primitive3",
+      "parentId": "root::avatar",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::avatar",
+        "sourceMeshName": "avaturn_look_0_primitive3"
+      },
+      "physics": {
+        "enabled": false,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "box",
+        "isCollider": false,
+        "isTrigger": false
+      }
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive4-q2u7jw",
+      "kind": "mesh",
+      "name": "avaturn_look_0_primitive4",
+      "parentId": "root::avatar",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::avatar",
+        "sourceMeshName": "avaturn_look_0_primitive4"
+      },
+      "physics": {
+        "enabled": false,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "box",
+        "isCollider": false,
+        "isTrigger": false
+      }
+    },
+    {
+      "id": "b32767c3-8cc2-43e9-9025-8a490d2be594",
+      "kind": "mesh",
+      "name": "Cone",
+      "transform": {
+        "position": [
+          0,
+          6.8234148025512695,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "primitiveType": "cone"
+      },
+      "physics": {
+        "enabled": true,
+        "type": "dynamic",
+        "mass": 100,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "convexHull",
+        "isCollider": true,
+        "isTrigger": false
+      }
+    },
+    {
+      "id": "d3198ad5-9785-46e5-9f79-f5a1edf936ce",
+      "kind": "mesh",
+      "name": "Sphere",
+      "transform": {
+        "position": [
+          0,
+          4.59812068939209,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "primitiveType": "sphere"
+      },
+      "physics": {
+        "enabled": true,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "convexHull",
+        "isCollider": true,
+        "isTrigger": false
+      }
+    },
+    {
+      "id": "6cad4f93-5463-49dd-92fc-ca44ef83e914",
+      "kind": "transformnode",
+      "name": "Transform Node",
+      "transform": {
+        "position": [
+          0,
+          0.49086952209472656,
+          0.0694437026977539
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          2
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "physics": {
+        "enabled": false,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "box",
+        "isCollider": false,
+        "isTrigger": false
+      },
+      "parentId": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a"
+    },
+    {
+      "id": "root::avatar",
+      "kind": "model",
+      "name": "avatar",
+      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/avatar.glb",
+      "transform": {
+        "position": [
+          -5.9604645663569045e-9,
+          -1.0079426765441895,
+          0.20161151885986328
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          2,
+          1,
+          2
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "assetId": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/avatar.glb",
+        "file": "avatar.glb",
+        "importedAsset": true
+      },
+      "inputControl": {
+        "locomotionType": "none",
+        "blendTime": 0.15,
+        "speed": 0.03,
+        "forward": {
+          "keyBinding": {
+            "key": "KeyW"
+          },
+          "animationId": "walk",
+          "animationName": "walk",
+          "speedBoostAnimationId": "run",
+          "speedBoostAnimationName": "run"
+        },
+        "idleAnimationId": "idle",
+        "idleAnimationName": "idle",
+        "backward": {
+          "keyBinding": {
+            "key": "KeyS"
+          },
+          "animationId": "walk_backward",
+          "animationName": "walk_backward",
+          "speedBoostAnimationId": "run_backward",
+          "speedBoostAnimationName": "run_backward"
+        },
+        "speedBoostEnabled": true,
+        "speedBoostMultiplier": 1.5,
+        "speedBoostKey": {
+          "key": "ShiftLeft"
+        },
+        "turnLeft": {
+          "keyBinding": {
+            "key": "KeyD"
+          },
+          "animationId": "walk",
+          "animationName": "walk",
+          "speedBoostAnimationId": "run",
+          "speedBoostAnimationName": "run"
+        },
+        "turnRight": {
+          "keyBinding": {
+            "key": "KeyA"
+          },
+          "animationId": "walk",
+          "animationName": "walk",
+          "speedBoostAnimationId": "run",
+          "speedBoostAnimationName": "run"
+        },
+        "jump": {
+          "keyBinding": {
+            "key": "Space"
+          },
+          "animationId": "jump",
+          "animationName": "jump",
+          "backwardAnimationId": "jump_backward",
+          "backwardAnimationName": "jump_backward"
+        }
+      },
+      "physics": {
+        "enabled": false,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "capsule",
+        "isCollider": false,
+        "isTrigger": false
+      },
+      "parentId": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a"
+    },
+    {
+      "id": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a",
+      "kind": "mesh",
+      "name": "Cone_01",
+      "transform": {
+        "position": [
+          0,
+          3.42610502243042,
+          -5.011314392089844
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          0.5,
+          1,
+          0.5
+        ]
+      },
+      "visible": false,
+      "enabled": true,
+      "metadata": {
+        "primitiveType": "cone"
+      },
+      "physics": {
+        "enabled": true,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 1,
+        "impostor": "capsule",
+        "isCollider": false,
+        "isTrigger": false,
+        "keepUpright": true
+      },
+      "inputControl": {
+        "locomotionType": "Grounded Avatar",
+        "forward": {
+          "keyBinding": {
+            "key": "KeyW"
+          },
+          "animationId": "walk",
+          "animationName": "walk",
+          "speedBoostAnimationId": "run",
+          "speedBoostAnimationName": "run"
+        },
+        "backward": {
+          "keyBinding": {
+            "key": "KeyS"
+          },
+          "animationId": "walk_backward",
+          "animationName": "walk_backward",
+          "speedBoostAnimationId": "run_backward",
+          "speedBoostAnimationName": "run_backward"
+        },
+        "turnLeft": {
+          "keyBinding": {
+            "key": "KeyD"
+          },
+          "animationId": "walk",
+          "animationName": "walk",
+          "speedBoostAnimationId": "run",
+          "speedBoostAnimationName": "run"
+        },
+        "turnRight": {
+          "keyBinding": {
+            "key": "KeyA"
+          },
+          "animationId": "walk",
+          "animationName": "walk",
+          "speedBoostAnimationId": "run",
+          "speedBoostAnimationName": "run"
+        },
+        "jump": {
+          "keyBinding": {
+            "key": "Space"
+          },
+          "animationId": "jump",
+          "animationName": "jump",
+          "backwardAnimationId": "jump_backward",
+          "backwardAnimationName": "jump_backward"
+        },
+        "idleAnimationId": "idle",
+        "idleAnimationName": "idle",
+        "blendTime": 0.15,
+        "speed": 0.03,
+        "speedBoostEnabled": true,
+        "speedBoostKey": {
+          "key": "ShiftLeft"
+        },
+        "speedBoostMultiplier": 1.5
+      }
+    },
+    {
+      "id": "ea93aaaa-4065-449c-9327-97360ce47738",
+      "kind": "mesh",
+      "name": "Cube_01",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          10,
+          1,
+          10
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "primitiveType": "cube"
+      },
+      "physics": {
+        "enabled": true,
+        "type": "static",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "box",
+        "isCollider": true,
+        "isTrigger": false
+      }
+    },
+    {
+      "id": "c0f696ac-3b73-4cf9-92a6-3893f152d1e6",
+      "kind": "particle",
+      "name": "Particle Effect",
+      "transform": {
+        "position": [
+          -0.1009206771850586,
+          -0.20476245880126953,
+          0.24107074737548828
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          2,
+          1,
+          2
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "particle": {
+        "id": "c0f696ac-3b73-4cf9-92a6-3893f152d1e6",
+        "name": "Particle Effect",
+        "runtime": "ParticleSystem",
+        "capacity": 200,
+        "playOnStart": true,
+        "disposeOnStop": false,
+        "billboardMode": "ALL",
+        "blendMode": "STANDARD",
+        "updateSpeed": 0.01,
+        "emitRate": 50,
+        "emitter": {
+          "kind": "point"
+        },
+        "minEmitPower": 0,
+        "maxEmitPower": 0,
+        "gravity": [
+          0,
+          -2,
+          0
+        ],
+        "direction1": [
+          0,
+          0,
+          0
+        ],
+        "direction2": [
+          0,
+          0,
+          0
+        ],
+        "minAngularSpeed": -1,
+        "maxAngularSpeed": 1,
+        "minSize": 0.1,
+        "maxSize": 0.2,
+        "minLifeTime": 0.2,
+        "maxLifeTime": 0.5,
+        "enableColorGradients": true,
+        "colorGradients": [
+          {
+            "t": 0,
+            "r": 0.3568627450980392,
+            "g": 0.3254901960784314,
+            "b": 0.12156862745098039,
+            "a": 0
+          },
+          {
+            "t": 0.5,
+            "r": 0.47058823529411764,
+            "g": 0.49411764705882355,
+            "b": 0.403921568627451,
+            "a": 0.51
+          },
+          {
+            "t": 1,
+            "r": 0.5098039215686274,
+            "g": 0.4588235294117647,
+            "b": 0.45098039215686275,
+            "a": 0
+          }
+        ]
+      },
+      "parentId": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a"
+    },
+    {
+      "id": "b2109d7d-6870-4675-8c8a-8da5ff2127c4",
+      "kind": "particle",
+      "name": "Particle Effect_01",
+      "transform": {
+        "position": [
+          0.12519961595535278,
+          2,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "particle": {
+        "id": "b2109d7d-6870-4675-8c8a-8da5ff2127c4",
+        "name": "Particle Effect_01",
+        "runtime": "ParticleSystem",
+        "capacity": 200,
+        "playOnStart": true,
+        "disposeOnStop": false,
+        "billboardMode": "ALL",
+        "blendMode": "STANDARD",
+        "updateSpeed": 0.01,
+        "emitRate": 50,
+        "emitter": {
+          "kind": "sphere",
+          "radius": 200,
+          "radiusRange": 0
+        },
+        "minEmitPower": 0,
+        "maxEmitPower": 0,
+        "gravity": [
+          0,
+          0,
+          0
+        ],
+        "direction1": [
+          0,
+          0,
+          0
+        ],
+        "direction2": [
+          0,
+          0,
+          0
+        ],
+        "minAngularSpeed": -1,
+        "maxAngularSpeed": 1,
+        "minSize": 3,
+        "maxSize": 7,
+        "minLifeTime": 10,
+        "maxLifeTime": 20,
+        "enableColorGradients": true,
+        "colorGradients": [
+          {
+            "t": 0,
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 0
+          },
+          {
+            "t": 0.25,
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 1
+          },
+          {
+            "t": 0.5,
+            "r": 0.9882352941176471,
+            "g": 0.9882352941176471,
+            "b": 0.9882352941176471,
+            "a": 0.37
+          },
+          {
+            "t": 0.75,
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 1
+          },
+          {
+            "t": 1,
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 0
+          }
+        ],
+        "textureUrl": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/star_04.png"
+      }
+    },
+    {
+      "id": "4d2ba1f4-bfe3-46bd-b99d-c52c8ff0e4f6",
+      "kind": "particle",
+      "name": "Particle Effect_02",
+      "transform": {
+        "position": [
+          -0.0005599153810180724,
+          9.865151405334473,
+          -0.028292672708630562
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "particle": {
+        "id": "4d2ba1f4-bfe3-46bd-b99d-c52c8ff0e4f6",
+        "name": "Particle Effect_02",
+        "runtime": "ParticleSystem",
+        "capacity": 200,
+        "playOnStart": true,
+        "disposeOnStop": false,
+        "billboardMode": "ALL",
+        "blendMode": "STANDARD",
+        "updateSpeed": 0.01,
+        "emitRate": 50,
+        "emitter": {
+          "kind": "point"
+        },
+        "minEmitPower": 1,
+        "maxEmitPower": 2,
+        "gravity": [
+          0,
+          -2,
+          0
+        ],
+        "direction1": [
+          -0.5,
+          1,
+          -0.5
+        ],
+        "direction2": [
+          0.5,
+          1.5,
+          0.5
+        ],
+        "minAngularSpeed": -1,
+        "maxAngularSpeed": 1,
+        "minSize": 0.5,
+        "maxSize": 1.5,
+        "minLifeTime": 2,
+        "maxLifeTime": 4,
+        "enableColorGradients": true,
+        "colorGradients": [
+          {
+            "t": 0,
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 0.2
+          },
+          {
+            "t": 0.5,
+            "r": 0.8,
+            "g": 0.8,
+            "b": 1,
+            "a": 0.8
+          },
+          {
+            "t": 1,
+            "r": 0.6,
+            "g": 0.6,
+            "b": 0.9,
+            "a": 0
+          }
+        ],
+        "textureUrl": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/star_04.png"
+      }
+    }
+  ],
+  "materialOverrides": {
+    "Collider": {
+      "wireframe": false
+    }
+  }
+}
