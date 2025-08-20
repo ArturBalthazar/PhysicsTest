@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneVersion": 3546,
+  "sceneVersion": 3644,
   "sceneSettings": {
     "environment": {
       "clearColor": [
@@ -88,9 +88,9 @@
         "minZ": 0.1,
         "maxZ": 1000,
         "fov": 0.7853981633974483,
-        "alpha": -1.6053490013850105,
-        "beta": 1.188947083937148,
-        "radius": 15.047332674109853,
+        "alpha": -0.7941146732085692,
+        "beta": 1.3826635482155105,
+        "radius": 23.362797929638926,
         "target": [
           0,
           0.49086952209472656,
@@ -1097,6 +1097,96 @@
         "isCollider": false,
         "isTrigger": false
       }
+    },
+    {
+      "id": "root::samsungbeach-zflip-v7",
+      "kind": "model",
+      "name": "SamsungBeach_ZFlip_v7",
+      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/Models/df440a4a-6f87-4c54-b545-1a02a679f8f0_SamsungBeach_ZFlip_v7.glb",
+      "transform": {
+        "position": [
+          0,
+          0,
+          -10.44238567352295
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "assetId": "2c1b99d7-e537-4246-8ddb-2b13293f5fe1",
+        "file": "SamsungBeach_ZFlip_v7.glb",
+        "importedAsset": true
+      }
+    },
+    {
+      "id": "root::samsungbeach-zflip-v7::mesh::mk-coloratlas-qh4ji5",
+      "kind": "mesh",
+      "name": "mk_ColorAtlas",
+      "parentId": "root::samsungbeach-zflip-v7",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::samsungbeach-zflip-v7",
+        "sourceMeshName": "mk_ColorAtlas"
+      }
+    },
+    {
+      "id": "root::samsungbeach-zflip-v7::mesh::mk-textured-aggregated-809372",
+      "kind": "mesh",
+      "name": "mk_Textured_Aggregated",
+      "parentId": "root::samsungbeach-zflip-v7",
+      "transform": {
+        "position": [
+          0,
+          0,
+          4.01414155960083
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::samsungbeach-zflip-v7",
+        "sourceMeshName": "mk_Textured_Aggregated"
+      }
     }
   ],
   "materialOverrides": {
@@ -1109,6 +1199,12 @@
         "g": 0,
         "b": 0
       }
+    },
+    "skyboxMaterial": {
+      "reflectionTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/px.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nx.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/py.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/ny.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/pz.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nz.png"
+    },
+    "mk_Textured_Aggregated_Material": {
+      "emissiveTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nz.png"
     }
   }
 }
