@@ -355,7 +355,25 @@
             const radius = cameraProps.radius || position.length() || 15;
             const target = cameraProps.target ? new BABYLON.Vector3(...cameraProps.target) : BABYLON.Vector3.Zero();
             
-            camera = new BABYLON.ArcRotateCamera(node.id, alpha, beta, radius, target, scene);
+            // Handle object targeting (like viewer.js)
+            if (cameraProps.targetMode === 'object' && cameraProps.targetObject) {
+              // Find the target node in the scene graph
+              const targetNode = EXPORTED_SCENE_GRAPH.nodes.find(function(n) { return n.id === cameraProps.targetObject; });
+              if (targetNode && targetNode.transform.position) {
+                const targetPos = new BABYLON.Vector3(targetNode.transform.position[0], targetNode.transform.position[1], targetNode.transform.position[2]);
+                camera = new BABYLON.ArcRotateCamera(node.id, alpha, beta, radius, targetPos, scene);
+                
+                // Store reference for potential dynamic updates (critical for tracking)
+                camera._targetObjectId = cameraProps.targetObject;
+                console.log('📹 Camera created with object target:', node.name, '→', cameraProps.targetObject);
+              } else {
+                // Fallback to default target if object not found
+                camera = new BABYLON.ArcRotateCamera(node.id, alpha, beta, radius, target, scene);
+                console.warn('⚠️ Camera target object not found:', cameraProps.targetObject);
+              }
+            } else {
+              camera = new BABYLON.ArcRotateCamera(node.id, alpha, beta, radius, target, scene);
+            }
             
             // Set radius limits if specified
             if (cameraProps.lowerRadiusLimit !== undefined) {
