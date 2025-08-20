@@ -13,6 +13,9 @@
   // Physics system variables
   let ammoWorld = null;
   let physicsPlugin = null;
+  
+  // Input control system variables
+  let inputControlManager = null;
 
   // Show loading
   function showLoading(message) {
@@ -202,6 +205,14 @@
       }, 300);
     }
 
+    // Initialize input controls after scene is ready (like viewer.js)
+    if (sceneGraph && sceneGraph.nodes) {
+      showLoading('Setting up input controls...');
+      inputControlManager = createInputControlManager(scene, sceneGraph);
+      initializeInputControls(inputControlManager);
+      console.log('🎮 Input control system initialized');
+    }
+
     // Start render loop
     engine.runRenderLoop(() => {
       if (scene) {
@@ -213,6 +224,14 @@
     window.addEventListener('resize', () => {
       if (engine) {
         engine.resize();
+      }
+    });
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', () => {
+      if (inputControlManager && inputControlManager.updateInterval) {
+        clearInterval(inputControlManager.updateInterval);
+        console.log('🎮 Input control manager cleaned up');
       }
     });
 
@@ -1422,6 +1441,497 @@
     } catch (error) {
       console.error('❌ Failed to create raw Ammo collider for ' + babylonObject.name + ':', error);
     }
+  }
+
+  // Input Control System (from viewer.js)
+  function createInputControlManager(scene, sceneGraph) {
+    return {
+      scene: scene,
+      sceneGraph: sceneGraph,
+      controlledObjects: new Map(),
+      activeKeys: new Set(),
+      isEnabled: true,
+      updateInterval: null
+    };
+  }
+
+  function initializeInputControls(manager) {
+    setupKeyboardListeners(manager);
+    scanForControlledObjects(manager);
+    startInputUpdateLoop(manager);
+  }
+
+  function setupKeyboardListeners(manager) {
+    window.addEventListener('keydown', function(event) {
+      if (!manager.isEnabled) return;
+      
+      const key = event.code || event.key;
+      const normalizedKey = key === ' ' ? 'Space' : key;
+      
+      if (!manager.activeKeys.has(normalizedKey)) {
+        manager.activeKeys.add(normalizedKey);
+        handleKeyDown(manager, normalizedKey);
+      }
+      
+      if (isMovementKey(manager, normalizedKey)) {
+        event.preventDefault();
+      }
+    });
+
+    window.addEventListener('keyup', function(event) {
+      if (!manager.isEnabled) return;
+      
+      const key = event.code || event.key;
+      const normalizedKey = key === ' ' ? 'Space' : key;
+      
+      manager.activeKeys.delete(normalizedKey);
+      handleKeyUp(manager, normalizedKey);
+    });
+  }
+
+  function isMovementKey(manager, key) {
+    for (const [nodeId, controlData] of manager.controlledObjects) {
+      const inputControl = controlData.inputControl;
+      if (inputControl.locomotionType === 'Grounded Avatar') {
+        const movements = ['forward', 'backward', 'turnLeft', 'turnRight', 'jump'];
+        for (const movement of movements) {
+          if (inputControl[movement] && inputControl[movement].keyBinding && inputControl[movement].keyBinding.key === key) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  function scanForControlledObjects(manager) {
+    if (!manager.sceneGraph || !manager.sceneGraph.nodes) return;
+
+    let foundCount = 0;
+    
+    for (const node of manager.sceneGraph.nodes) {
+      if (node.inputControl && node.inputControl.locomotionType !== 'none') {
+        const babylonObject = manager.scene.getNodeById(node.id);
+        if (babylonObject) {
+          const animationGroups = getAnimationGroupsForObject(manager.scene, babylonObject);
+          
+          manager.controlledObjects.set(node.id, {
+            object: babylonObject,
+            inputControl: node.inputControl,
+            animations: animationGroups,
+            nodeData: node,
+            jumpState: {
+              isJumping: false,
+              jumpVelocity: 0,
+              groundY: babylonObject.position.y
+            },
+            currentAnimation: null,
+            isMoving: false
+          });
+          
+          // Initialize control rotation for physics objects
+          if (babylonObject.physicsImpostor) {
+            babylonObject._controlRotation = 0;
+            console.log('🎯 Initialized control rotation for physics object:', node.name);
+          }
+          
+          foundCount++;
+          console.log('🎮 Found controlled object:', node.name, '(' + node.inputControl.locomotionType + ')');
+          console.log('🎬 Available animations for ' + node.name + ':', animationGroups.map(function(ag) { return ag.name; }));
+          
+          // Start idle animation if specified and animations are available
+          if (animationGroups.length > 0) {
+            playIdleAnimation(manager, node.id);
+          }
+        }
+      }
+    }
+    
+    console.log('🎮 Found ' + foundCount + ' objects with input controls');
+  }
+
+  function getAnimationGroupsForObject(scene, babylonObject) {
+    if (!scene.animationGroups || scene.animationGroups.length === 0) {
+      return [];
+    }
+
+    const commonAnimationNames = ['idle', 'walk', 'run', 'jump', 'walk_backward', 'run_backward'];
+    const foundByName = [];
+    
+    for (const name of commonAnimationNames) {
+      let animGroup = scene.getAnimationGroupByName(name);
+      if (!animGroup) {
+        animGroup = scene.animationGroups.find(function(ag) { 
+          return ag.name && ag.name.toLowerCase() === name.toLowerCase(); 
+        });
+      }
+      if (animGroup && !foundByName.includes(animGroup)) {
+        foundByName.push(animGroup);
+        console.log('📛 Found animation by name: "' + animGroup.name + '"');
+      }
+    }
+
+    return foundByName;
+  }
+
+  function playIdleAnimation(manager, nodeId) {
+    const controlData = manager.controlledObjects.get(nodeId);
+    if (!controlData || !controlData.inputControl.idleAnimationId) return;
+    
+    if (!controlData.isMoving) {
+      playMovementAnimation(manager, controlData.inputControl.idleAnimationId, controlData, 0.15);
+    }
+  }
+
+  function playMovementAnimation(manager, animationId, controlData, blendTime) {
+    if (!animationId) return;
+    
+    const targetAnimation = controlData.animations.find(function(ag) { return ag.name === animationId; });
+    if (!targetAnimation) {
+      console.warn('⚠️ Animation "' + animationId + '" not found');
+      return;
+    }
+
+    if (controlData.currentAnimation === targetAnimation) {
+      return;
+    }
+
+    console.log('🔄 Blending to animation: ' + animationId + ' (blend time: ' + blendTime + 's)');
+
+    // Stop current animation
+    if (controlData.currentAnimation) {
+      controlData.currentAnimation.stop();
+    }
+
+    // Start new animation
+    targetAnimation.start(true, 1.0, targetAnimation.from, targetAnimation.to, false);
+    controlData.currentAnimation = targetAnimation;
+    
+    // Simple blend completion callback
+    setTimeout(function() {
+      console.log('✅ Animation blend completed: ' + animationId);
+    }, (blendTime || 0.15) * 1000);
+  }
+
+  function handleKeyDown(manager, key) {
+    for (const [nodeId, controlData] of manager.controlledObjects) {
+      const inputControl = controlData.inputControl;
+      
+      if (inputControl.locomotionType === 'Grounded Avatar') {
+        handleGroundedInput(manager, key, controlData);
+      }
+    }
+  }
+
+  function handleKeyUp(manager, key) {
+    for (const [nodeId, controlData] of manager.controlledObjects) {
+      const inputControl = controlData.inputControl;
+      
+      if (inputControl.locomotionType === 'Grounded Avatar') {
+        stopMovementAnimation(manager, key, controlData);
+      }
+    }
+  }
+
+  function handleGroundedInput(manager, key, controlData) {
+    const object = controlData.object;
+    const inputControl = controlData.inputControl;
+    const movements = ['forward', 'backward', 'turnLeft', 'turnRight', 'jump'];
+    
+    // Check if this key press corresponds to any movement
+    let isMovementKey = false;
+    for (const movement of movements) {
+      const movementControl = inputControl[movement];
+      if (movementControl && movementControl.keyBinding && movementControl.keyBinding.key === key) {
+        console.log('🎮 ' + movement + ' key pressed for ' + object.name);
+        isMovementKey = true;
+        
+        controlData.isMoving = true;
+        applyMovement(manager, movement, controlData);
+        break;
+      }
+    }
+    
+    if (isMovementKey) {
+      updateMovementAnimation(manager, controlData);
+    }
+  }
+
+  function stopMovementAnimation(manager, key, controlData) {
+    const inputControl = controlData.inputControl;
+    
+    // Check if this key is still active in any movement
+    let stillMoving = false;
+    const movements = ['forward', 'backward', 'turnLeft', 'turnRight'];
+    
+    for (const movement of movements) {
+      const movementControl = inputControl[movement];
+      if (movementControl && movementControl.keyBinding && movementControl.keyBinding.key !== key && 
+          manager.activeKeys.has(movementControl.keyBinding.key)) {
+        stillMoving = true;
+        break;
+      }
+    }
+    
+    if (!stillMoving) {
+      controlData.isMoving = false;
+      console.log('🛑 All movement stopped for ' + controlData.object.name);
+      playIdleAnimation(manager, controlData.nodeData.id);
+    }
+  }
+
+  function updateMovementAnimation(manager, controlData) {
+    const inputControl = controlData.inputControl;
+    const isSpeedBoosting = inputControl.speedBoostEnabled && 
+                           inputControl.speedBoostKey && inputControl.speedBoostKey.key && 
+                           manager.activeKeys.has(inputControl.speedBoostKey.key);
+    
+    let targetAnimation = null;
+    
+    // Check movement keys in priority order
+    if (inputControl.forward && inputControl.forward.keyBinding && manager.activeKeys.has(inputControl.forward.keyBinding.key)) {
+      targetAnimation = isSpeedBoosting && inputControl.forward.speedBoostAnimationId ? 
+        inputControl.forward.speedBoostAnimationId : inputControl.forward.animationId;
+    } else if (inputControl.backward && inputControl.backward.keyBinding && manager.activeKeys.has(inputControl.backward.keyBinding.key)) {
+      targetAnimation = isSpeedBoosting && inputControl.backward.speedBoostAnimationId ? 
+        inputControl.backward.speedBoostAnimationId : inputControl.backward.animationId;
+    } else if (inputControl.turnLeft && inputControl.turnLeft.keyBinding && manager.activeKeys.has(inputControl.turnLeft.keyBinding.key)) {
+      targetAnimation = isSpeedBoosting && inputControl.turnLeft.speedBoostAnimationId ? 
+        inputControl.turnLeft.speedBoostAnimationId : inputControl.turnLeft.animationId;
+    } else if (inputControl.turnRight && inputControl.turnRight.keyBinding && manager.activeKeys.has(inputControl.turnRight.keyBinding.key)) {
+      targetAnimation = isSpeedBoosting && inputControl.turnRight.speedBoostAnimationId ? 
+        inputControl.turnRight.speedBoostAnimationId : inputControl.turnRight.animationId;
+    } else if (inputControl.jump && inputControl.jump.keyBinding && manager.activeKeys.has(inputControl.jump.keyBinding.key)) {
+      targetAnimation = isSpeedBoosting && inputControl.jump.speedBoostAnimationId ? 
+        inputControl.jump.speedBoostAnimationId : inputControl.jump.animationId;
+    }
+    
+    if (targetAnimation && (!controlData.currentAnimation || targetAnimation !== controlData.currentAnimation.name)) {
+      playMovementAnimation(manager, targetAnimation, controlData, 0.15);
+    }
+  }
+
+  function applyMovement(manager, movement, controlData) {
+    const object = controlData.object;
+    const inputControl = controlData.inputControl;
+    const jumpState = controlData.jumpState;
+    
+    const baseSpeed = inputControl.speed || 0.1;
+    const rotateSpeed = 0.05;
+    
+    const isSpeedBoosting = inputControl.speedBoostEnabled && 
+                           inputControl.speedBoostKey && inputControl.speedBoostKey.key && 
+                           manager.activeKeys.has(inputControl.speedBoostKey.key);
+    const speedMultiplier = isSpeedBoosting ? (inputControl.speedBoostMultiplier || 2.0) : 1.0;
+    const currentSpeed = baseSpeed * speedMultiplier;
+    
+    const hasPhysics = object.physicsImpostor !== null && object.physicsImpostor !== undefined;
+    
+    switch (movement) {
+      case 'forward':
+        const forwardDir = getForwardDirection(object);
+        if (hasPhysics) {
+          const currentVel = object.physicsImpostor.getLinearVelocity();
+          const physicsSpeed = currentSpeed * 100;
+          const moveDir = forwardDir.scale(physicsSpeed);
+          object.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(
+            moveDir.x, 
+            currentVel.y,
+            moveDir.z
+          ));
+        } else {
+          object.position.addInPlace(forwardDir.scale(currentSpeed));
+        }
+        break;
+        
+      case 'backward':
+        const backwardDir = getForwardDirection(object);
+        if (hasPhysics) {
+          const currentVel = object.physicsImpostor.getLinearVelocity();
+          const physicsSpeed = currentSpeed * 100;
+          const moveDir = backwardDir.scale(-physicsSpeed);
+          object.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(
+            moveDir.x, 
+            currentVel.y,
+            moveDir.z
+          ));
+        } else {
+          object.position.addInPlace(backwardDir.scale(-currentSpeed));
+        }
+        break;
+        
+      case 'turnLeft':
+        if (hasPhysics) {
+          if (!object._controlRotation) object._controlRotation = 0;
+          object._controlRotation -= rotateSpeed * 1;
+          rotateChildNodes(object, -rotateSpeed * 1);
+        } else {
+          object.rotation.y -= rotateSpeed;
+        }
+        break;
+        
+      case 'turnRight':
+        if (hasPhysics) {
+          if (!object._controlRotation) object._controlRotation = 0;
+          object._controlRotation += rotateSpeed * 1;
+          rotateChildNodes(object, rotateSpeed * 1);
+        } else {
+          object.rotation.y += rotateSpeed;
+        }
+        break;
+        
+      case 'jump':
+        if (hasPhysics) {
+          const vel = object.physicsImpostor.getLinearVelocity();
+          if (!jumpState.isJumping && Math.abs(vel.y) < 0.5) {
+            const jumpHeight = inputControl.jumpHeight || 1.2;
+            const g = Math.abs(manager.scene.getPhysicsEngine() && manager.scene.getPhysicsEngine().gravity ? manager.scene.getPhysicsEngine().gravity.y : 9.81);
+            const v0 = Math.sqrt(2 * g * jumpHeight);
+            const mass = object.physicsImpostor.getParam && object.physicsImpostor.getParam('mass') ? object.physicsImpostor.getParam('mass') : object.physicsImpostor.mass || 1;
+            
+            object.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(vel.x, 0, vel.z));
+            object.physicsImpostor.applyImpulse(
+              new BABYLON.Vector3(0, mass * v0, 0),
+              object.getAbsolutePosition()
+            );
+            
+            jumpState.isJumping = true;
+            console.log('🦘 ' + object.name + ' jumped (physics) v0=' + v0.toFixed(2) + ' m/s');
+          }
+        } else {
+          if (!jumpState.isJumping && object.position.y <= jumpState.groundY + 0.001) {
+            const g = 9.81;
+            const jumpHeight = inputControl.jumpHeight || 1.2;
+            const v0 = Math.sqrt(2 * g * jumpHeight);
+            jumpState.isJumping = true;
+            jumpState.jumpVelocity = v0;
+            console.log('🦘 ' + object.name + ' jumped (non-physics) v0=' + v0.toFixed(2) + ' m/s');
+          }
+        }
+        break;
+    }
+  }
+
+  function getForwardDirection(object) {
+    const hasPhysics = object.physicsImpostor !== null && object.physicsImpostor !== undefined;
+    let yRotation;
+    
+    if (hasPhysics && object._controlRotation !== undefined) {
+      yRotation = object._controlRotation;
+    } else {
+      yRotation = object.rotation.y;
+    }
+    
+    return new BABYLON.Vector3(
+      Math.sin(yRotation),
+      0,
+      Math.cos(yRotation)
+    );
+  }
+
+  function rotateChildNodes(parentObject, rotationDelta) {
+    if (!parentObject.getChildren) return;
+    
+    const children = parentObject.getChildren();
+    for (const child of children) {
+      if (child.rotation !== undefined) {
+        child.rotation.y += rotationDelta;
+        child.rotationQuaternion = null;
+      }
+    }
+  }
+
+  function startInputUpdateLoop(manager) {
+    manager.updateInterval = setInterval(function() {
+      if (!manager.isEnabled) return;
+      
+      // Update physics for all controlled objects
+      for (const [nodeId, controlData] of manager.controlledObjects) {
+        updatePhysicsForObject(manager, controlData);
+      }
+      
+      // Handle held keys
+      if (manager.activeKeys.size > 0) {
+        for (const key of manager.activeKeys) {
+          for (const [nodeId, controlData] of manager.controlledObjects) {
+            const inputControl = controlData.inputControl;
+            
+            if (inputControl.locomotionType === 'Grounded Avatar') {
+              handleGroundedInput(manager, key, controlData);
+            }
+          }
+        }
+      }
+    }, 16); // ~60fps
+  }
+
+  function updatePhysicsForObject(manager, controlData) {
+    const object = controlData.object;
+    const jumpState = controlData.jumpState;
+    const hasPhysics = object.physicsImpostor !== null && object.physicsImpostor !== undefined;
+    
+    if (hasPhysics) {
+      // Check if we should stop horizontal movement when no keys are pressed
+      const isAnyMovementKeyPressed = hasActiveMovementKeys(manager, controlData);
+      
+      if (!isAnyMovementKeyPressed) {
+        const currentVel = object.physicsImpostor.getLinearVelocity();
+        const dampingFactor = 0.85;
+        object.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(
+          currentVel.x * dampingFactor, 
+          currentVel.y,
+          currentVel.z * dampingFactor
+        ));
+        
+        object.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
+      }
+      
+      // Keep object upright
+      if (object.physicsImpostor) {
+        const angVel = object.physicsImpostor.getAngularVelocity();
+        object.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, angVel.y, 0));
+        object.rotationQuaternion = BABYLON.Quaternion.Identity();
+      }
+      
+      // Handle physics-based jump landing
+      if (jumpState.isJumping) {
+        const currentVel = object.physicsImpostor.getLinearVelocity();
+        if (Math.abs(currentVel.y) < 0.5 && object.position.y <= jumpState.groundY + 0.5) {
+          jumpState.isJumping = false;
+          console.log('🏃 ' + object.name + ' landed');
+        }
+      }
+    } else {
+      // Handle non-physics jump
+      if (jumpState.isJumping) {
+        const gravity = -9.81;
+        const deltaTime = 0.016;
+        
+        jumpState.jumpVelocity += gravity * deltaTime;
+        object.position.y += jumpState.jumpVelocity * deltaTime;
+        
+        if (object.position.y <= jumpState.groundY) {
+          object.position.y = jumpState.groundY;
+          jumpState.isJumping = false;
+          jumpState.jumpVelocity = 0;
+          console.log('🏃 ' + object.name + ' landed');
+        }
+      }
+    }
+  }
+
+  function hasActiveMovementKeys(manager, controlData) {
+    const inputControl = controlData.inputControl;
+    const movements = ['forward', 'backward', 'turnLeft', 'turnRight'];
+    
+    for (const movement of movements) {
+      const movementControl = inputControl[movement];
+      if (movementControl && movementControl.keyBinding && 
+          manager.activeKeys.has(movementControl.keyBinding.key)) {
+        return true;
+      }
+    }
+    return false;
   }
 
 })();
