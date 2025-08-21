@@ -216,7 +216,7 @@
       console.log('🎮 Input control system initialized');
       
       // Initialize camera tracking for dynamic object targeting (exact copy from viewer.js)
-      cameraTrackingManager = new CameraTrackingManager(scene, sceneGraph);
+      cameraTrackingManager = createCameraTrackingManager(scene, sceneGraph);
       cameraTrackingManager.initialize();
       console.log('📹 Camera tracking system initialized');
     }
@@ -1964,74 +1964,77 @@
   }
 
   // Camera Tracking System (exact copy from viewer.js)
-  function CameraTrackingManager(scene, sceneGraph) {
-    this.scene = scene;
-    this.sceneGraph = sceneGraph;
-    this.trackedCameras = new Map(); // cameraId -> { camera, targetObjectId, targetObject }
+  function createCameraTrackingManager(scene, sceneGraph) {
+    const manager = {
+      scene: scene,
+      sceneGraph: sceneGraph,
+      trackedCameras: new Map(),
+      
+      initialize: function() {
+        this.scanForTrackingCameras();
+        this.setupUpdateLoop();
+      },
+      
+      scanForTrackingCameras: function() {
+        if (!this.sceneGraph || !this.sceneGraph.nodes) return;
+
+        let foundCount = 0;
+
+        for (const node of this.sceneGraph.nodes) {
+          if (node.kind === 'camera' && node.camera && node.camera.targetMode === 'object' && node.camera.targetObject) {
+            const babylonCamera = this.scene.getCameraById(node.id);
+            const targetObject = this.scene.getNodeById(node.camera.targetObject);
+            
+            if (babylonCamera && targetObject) {
+              this.trackedCameras.set(node.id, {
+                camera: babylonCamera,
+                targetObjectId: node.camera.targetObject,
+                targetObject: targetObject
+              });
+              
+              foundCount++;
+              console.log('📹 Found camera tracking object: ' + node.name + ' → ' + (targetObject.name || node.camera.targetObject));
+            }
+          }
+        }
+
+        console.log('📹 Found ' + foundCount + ' cameras with object targets');
+      },
+      
+      updateCameraTargets: function() {
+        for (const [cameraId, trackingData] of this.trackedCameras) {
+          const camera = trackingData.camera;
+          const targetObject = trackingData.targetObject;
+          
+          if (camera instanceof BABYLON.ArcRotateCamera && targetObject) {
+            // CRITICAL FIX: Use world position to account for parent hierarchy movement
+            // When child objects move with their parents (e.g., via input controls), 
+            // their local position stays the same but world position changes
+            const worldPosition = targetObject.getAbsolutePosition();
+            camera.target.copyFrom(worldPosition);
+          }
+        }
+      },
+      
+      setupUpdateLoop: function() {
+        // Use scene's render loop for smooth camera tracking
+        if (this.scene && this.trackedCameras.size > 0) {
+          const self = this;
+          this.scene.onBeforeRenderObservable.add(function() {
+            self.updateCameraTargets();
+          });
+          console.log('📹 Camera tracking update loop started');
+        }
+      },
+      
+      dispose: function() {
+        this.trackedCameras.clear();
+        console.log('📹 CameraTrackingManager disposed');
+      }
+    };
     
     console.log('📹 CameraTrackingManager initialized');
+    return manager;
   }
-
-  CameraTrackingManager.prototype.initialize = function() {
-    this.scanForTrackingCameras();
-    this.setupUpdateLoop();
-  };
-
-  CameraTrackingManager.prototype.scanForTrackingCameras = function() {
-    if (!this.sceneGraph || !this.sceneGraph.nodes) return;
-
-    let foundCount = 0;
-
-    for (const node of this.sceneGraph.nodes) {
-      if (node.kind === 'camera' && node.camera && node.camera.targetMode === 'object' && node.camera.targetObject) {
-        const babylonCamera = this.scene.getCameraById(node.id);
-        const targetObject = this.scene.getNodeById(node.camera.targetObject);
-        
-        if (babylonCamera && targetObject) {
-          this.trackedCameras.set(node.id, {
-            camera: babylonCamera,
-            targetObjectId: node.camera.targetObject,
-            targetObject: targetObject
-          });
-          
-          foundCount++;
-          console.log('📹 Found camera tracking object: ' + node.name + ' → ' + (targetObject.name || node.camera.targetObject));
-        }
-      }
-    }
-
-    console.log('📹 Found ' + foundCount + ' cameras with object targets');
-  };
-
-  CameraTrackingManager.prototype.updateCameraTargets = function() {
-    for (const [cameraId, trackingData] of this.trackedCameras) {
-      const camera = trackingData.camera;
-      const targetObject = trackingData.targetObject;
-      
-      if (camera instanceof BABYLON.ArcRotateCamera && targetObject) {
-        // CRITICAL FIX: Use world position to account for parent hierarchy movement
-        // When child objects move with their parents (e.g., via input controls), 
-        // their local position stays the same but world position changes
-        const worldPosition = targetObject.getAbsolutePosition();
-        camera.target.copyFrom(worldPosition);
-      }
-    }
-  };
-
-  CameraTrackingManager.prototype.setupUpdateLoop = function() {
-    // Use scene's render loop for smooth camera tracking
-    if (this.scene && this.trackedCameras.size > 0) {
-      const self = this;
-      this.scene.onBeforeRenderObservable.add(function() {
-        self.updateCameraTargets();
-      });
-      console.log('📹 Camera tracking update loop started');
-    }
-  };
-
-  CameraTrackingManager.prototype.dispose = function() {
-    this.trackedCameras.clear();
-    console.log('📹 CameraTrackingManager disposed');
-  };
 
 })();
