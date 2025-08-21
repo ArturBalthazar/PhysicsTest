@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneVersion": 3764,
+  "sceneVersion": 3884,
   "sceneSettings": {
     "environment": {
       "clearColor": [
@@ -77,7 +77,7 @@
         ],
         "rotation": [
           0,
-          0,
+          3.141592653589793,
           0
         ]
       },
@@ -88,16 +88,16 @@
         "minZ": 0.1,
         "maxZ": 1000,
         "fov": 0.7853981633974483,
-        "alpha": -1.5708940455469138,
-        "beta": 1.0437584881934234,
-        "radius": 6.715267669504712,
+        "alpha": -7.826056899353846,
+        "beta": 1.1535120186306216,
+        "radius": 12.790115648184603,
         "target": [
           0,
-          2.9398210048675537,
-          -5.290708541870117
+          0.49086952209472656,
+          -8.672126770019531
         ],
         "targetMode": "object",
-        "targetObject": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a"
+        "targetObject": "6cad4f93-5463-49dd-92fc-ca44ef83e914"
       }
     },
     {
@@ -108,7 +108,7 @@
         "position": [
           0,
           0.49086952209472656,
-          -0.6077871322631836
+          -8.672126770019531
         ],
         "rotation": [
           0,
@@ -981,47 +981,6 @@
           }
         ],
         "textureUrl": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/star_04.png"
-      }
-    },
-    {
-      "id": "a0ece950-564b-4b89-a758-659eb8b76006",
-      "kind": "camera",
-      "name": "Camera_01",
-      "transform": {
-        "position": [
-          5,
-          5,
-          5
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "camera": {
-        "type": "ArcRotate",
-        "minZ": 0.1,
-        "maxZ": 100,
-        "fov": 0.7853981633974483,
-        "active": false,
-        "alpha": -2.0008838309951242,
-        "beta": 0.6063215530122977,
-        "radius": 10,
-        "target": [
-          0,
-          0,
-          0
-        ],
-        "lowerRadiusLimit": 0.1,
-        "upperRadiusLimit": 100
       }
     },
     {
