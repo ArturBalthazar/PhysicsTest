@@ -190,7 +190,23 @@
     // Wait for scene to be ready
     await scene.whenReadyAsync();
 
-    // Apply material overrides after scene is fully ready
+    // Initialize input controls after scene is ready (like viewer.js timing)
+    if (sceneGraph && sceneGraph.nodes) {
+      showLoading('Setting up input controls...');
+      inputControlManager = createInputControlManager(scene, sceneGraph);
+      initializeInputControls(inputControlManager);
+      console.log('🎮 Input control system initialized');
+      
+      // Initialize camera tracking for dynamic object targeting (exact viewer.js timing)
+      // CRITICAL: Add delay to ensure parent relationships are fully established
+      console.log('📹 Waiting for parent relationships to stabilize...');
+      await new Promise(resolve => setTimeout(resolve, 100));
+      cameraTrackingManager = createCameraTrackingManager(scene, sceneGraph);
+      cameraTrackingManager.initialize();
+      console.log('📹 Camera tracking system initialized');
+    }
+
+    // Apply material overrides after controls are initialized
     if (sceneGraph.materialOverrides) {
       showLoading('Applying material overrides...');
       // Add a longer delay to ensure all materials and textures including IBL are fully initialized
@@ -206,19 +222,6 @@
         refreshMaterialsForIBL(scene);
         console.log('🎉 Runtime IBL reflections should now be correct!');
       }, 300);
-    }
-
-    // Initialize input controls after scene is ready (like viewer.js)
-    if (sceneGraph && sceneGraph.nodes) {
-      showLoading('Setting up input controls...');
-      inputControlManager = createInputControlManager(scene, sceneGraph);
-      initializeInputControls(inputControlManager);
-      console.log('🎮 Input control system initialized');
-      
-      // Initialize camera tracking for dynamic object targeting (exact copy from viewer.js)
-      cameraTrackingManager = createCameraTrackingManager(scene, sceneGraph);
-      cameraTrackingManager.initialize();
-      console.log('📹 Camera tracking system initialized');
     }
 
     // Start render loop
@@ -1985,16 +1988,6 @@
             const babylonCamera = this.scene.getCameraById(node.id);
             const targetObject = this.scene.getNodeById(node.camera.targetObject);
             
-            console.log('📹 DEBUG: Camera ' + node.name + ' looking for target: ' + node.camera.targetObject);
-            console.log('📹 DEBUG: Camera found: ' + !!babylonCamera);
-            console.log('📹 DEBUG: Target object found: ' + !!targetObject);
-            if (targetObject) {
-              console.log('📹 DEBUG: Target object name: ' + targetObject.name);
-              console.log('📹 DEBUG: Target object parent: ' + (targetObject.parent ? targetObject.parent.name : 'none'));
-              console.log('📹 DEBUG: Target position: ' + targetObject.position.toString());
-              console.log('📹 DEBUG: Target world position: ' + targetObject.getAbsolutePosition().toString());
-            }
-            
             if (babylonCamera && targetObject) {
               this.trackedCameras.set(node.id, {
                 camera: babylonCamera,
@@ -2004,8 +1997,6 @@
               
               foundCount++;
               console.log('📹 Found camera tracking object: ' + node.name + ' → ' + (targetObject.name || node.camera.targetObject));
-            } else {
-              console.warn('⚠️ Camera tracking failed - camera: ' + !!babylonCamera + ', target: ' + !!targetObject);
             }
           }
         }
@@ -2023,7 +2014,6 @@
             // When child objects move with their parents (e.g., via input controls), 
             // their local position stays the same but world position changes
             const worldPosition = targetObject.getAbsolutePosition();
-            console.log('📹 DEBUG UPDATE: Target ' + targetObject.name + ' world pos: ' + worldPosition.toString());
             camera.target.copyFrom(worldPosition);
           }
         }
