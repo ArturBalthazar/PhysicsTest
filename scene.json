@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneVersion": 3668,
+  "sceneVersion": 3764,
   "sceneSettings": {
     "environment": {
       "clearColor": [
@@ -93,12 +93,47 @@
         "radius": 6.715267669504712,
         "target": [
           0,
-          0.49086952209472656,
-          0.0694437026977539
+          2.9398210048675537,
+          -5.290708541870117
         ],
         "targetMode": "object",
-        "targetObject": "6cad4f93-5463-49dd-92fc-ca44ef83e914"
+        "targetObject": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a"
       }
+    },
+    {
+      "id": "6cad4f93-5463-49dd-92fc-ca44ef83e914",
+      "kind": "transformnode",
+      "name": "Transform Node",
+      "transform": {
+        "position": [
+          0,
+          0.49086952209472656,
+          -0.6077871322631836
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          2
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "physics": {
+        "enabled": false,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "box",
+        "isCollider": false,
+        "isTrigger": false
+      },
+      "parentId": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a"
     },
     {
       "id": "light1",
@@ -442,41 +477,6 @@
       }
     },
     {
-      "id": "6cad4f93-5463-49dd-92fc-ca44ef83e914",
-      "kind": "transformnode",
-      "name": "Transform Node",
-      "transform": {
-        "position": [
-          0,
-          0.49086952209472656,
-          0.0694437026977539
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          2
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "physics": {
-        "enabled": false,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "box",
-        "isCollider": false,
-        "isTrigger": false
-      },
-      "parentId": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a"
-    },
-    {
       "id": "root::avatar",
       "kind": "model",
       "name": "avatar",
@@ -582,7 +582,7 @@
         "position": [
           0,
           2.9398210048675537,
-          -5.024842262268066
+          -5.290708541870117
         ],
         "rotation": [
           0,
