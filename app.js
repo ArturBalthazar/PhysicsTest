@@ -1985,6 +1985,16 @@
             const babylonCamera = this.scene.getCameraById(node.id);
             const targetObject = this.scene.getNodeById(node.camera.targetObject);
             
+            console.log('📹 DEBUG: Camera ' + node.name + ' looking for target: ' + node.camera.targetObject);
+            console.log('📹 DEBUG: Camera found: ' + !!babylonCamera);
+            console.log('📹 DEBUG: Target object found: ' + !!targetObject);
+            if (targetObject) {
+              console.log('📹 DEBUG: Target object name: ' + targetObject.name);
+              console.log('📹 DEBUG: Target object parent: ' + (targetObject.parent ? targetObject.parent.name : 'none'));
+              console.log('📹 DEBUG: Target position: ' + targetObject.position.toString());
+              console.log('📹 DEBUG: Target world position: ' + targetObject.getAbsolutePosition().toString());
+            }
+            
             if (babylonCamera && targetObject) {
               this.trackedCameras.set(node.id, {
                 camera: babylonCamera,
@@ -1994,6 +2004,8 @@
               
               foundCount++;
               console.log('📹 Found camera tracking object: ' + node.name + ' → ' + (targetObject.name || node.camera.targetObject));
+            } else {
+              console.warn('⚠️ Camera tracking failed - camera: ' + !!babylonCamera + ', target: ' + !!targetObject);
             }
           }
         }
@@ -2011,6 +2023,7 @@
             // When child objects move with their parents (e.g., via input controls), 
             // their local position stays the same but world position changes
             const worldPosition = targetObject.getAbsolutePosition();
+            console.log('📹 DEBUG UPDATE: Target ' + targetObject.name + ' world pos: ' + worldPosition.toString());
             camera.target.copyFrom(worldPosition);
           }
         }
