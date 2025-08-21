@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneVersion": 3924,
+  "sceneVersion": 3925,
   "sceneSettings": {
     "environment": {
       "clearColor": [
@@ -1160,7 +1160,8 @@
       }
     },
     "skyboxMaterial": {
-      "reflectionTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/px.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nx.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/py.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/ny.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/pz.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nz.png"
+      "reflectionTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/px.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nx.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/py.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/ny.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/pz.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nz.png",
+      "wireframe": true
     },
     "mk_Textured_Aggregated_Material": {
       "emissiveTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nz.png"
