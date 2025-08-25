@@ -1,33 +1,33 @@
 {
   "version": 1,
-  "sceneVersion": 3925,
+  "sceneVersion": 2375,
   "sceneSettings": {
     "environment": {
       "clearColor": [
-        0.027450980392156862,
-        0.027450980392156862,
-        0.054901960784313725,
-        1
+        0,
+        0,
+        0,
+        0
       ],
       "ambientColor": [
         0,
         0,
         0
       ],
-      "useIBL": true,
-      "iblPath": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/sambungBeach.env",
+      "useIBL": false,
+      "iblPath": null,
       "iblIntensity": 1,
-      "useSkybox": true,
-      "skyboxType": "cube",
+      "useSkybox": false,
+      "skyboxType": "none",
       "skyboxPanoramaPath": null,
       "skyboxMaterial": "fromIBL",
       "skyboxTextures": {
-        "nx": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nx.png",
-        "ny": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/ny.png",
-        "nz": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nz.png",
-        "px": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/px.png",
-        "py": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/py.png",
-        "pz": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/pz.png"
+        "nx": null,
+        "ny": null,
+        "nz": null,
+        "px": null,
+        "py": null,
+        "pz": null
       },
       "fogMode": "none"
     },
@@ -56,12 +56,8 @@
         -9.81,
         0
       ],
-      "useDeltaForWorldStep": true,
-      "fixedTimeStep": 0.0166667,
-      "iterations": 2,
-      "lockstepMaxSteps": 4,
-      "debug": false,
-      "timeStep": 0
+      "timeStep": 0.016666666666666666,
+      "iterations": 10
     }
   },
   "nodes": [
@@ -71,13 +67,13 @@
       "name": "Camera",
       "transform": {
         "position": [
-          0.010107990354299545,
-          2.9933955669403076,
-          -6.325350761413574
+          8.65,
+          5,
+          -8.65
         ],
         "rotation": [
           0,
-          3.141592653589793,
+          0,
           0
         ]
       },
@@ -86,54 +82,36 @@
         "type": "ArcRotate",
         "active": true,
         "minZ": 0.1,
-        "maxZ": 1000,
+        "maxZ": 100,
         "fov": 0.7853981633974483,
-        "alpha": -7.826056899353846,
-        "beta": 1.1535120186306216,
-        "radius": 12.790115648184603,
+        "alpha": -5.374639345809274,
+        "beta": 1.3804754775533103,
+        "radius": 5,
         "target": [
-          0,
-          0.49086952209472656,
-          -8.672126770019531
+          4.480669021606445,
+          0.9037495255470276,
+          10.906243324279785
         ],
         "targetMode": "object",
-        "targetObject": "6cad4f93-5463-49dd-92fc-ca44ef83e914"
+        "targetObject": "d4327a08-28fe-4195-8869-09b5feefedf1",
+        "collision": {
+          "enabled": false,
+          "shoulderOffset": [
+            0.5,
+            1.6,
+            -3.5
+          ],
+          "minDistance": 0.5,
+          "maxDistance": 6,
+          "cushion": 0.2,
+          "extraRays": 4,
+          "posLerp": 0.15,
+          "rotLerp": 0.15,
+          "distance": 10
+        },
+        "upperRadiusLimit": 10,
+        "lowerRadiusLimit": 5
       }
-    },
-    {
-      "id": "6cad4f93-5463-49dd-92fc-ca44ef83e914",
-      "kind": "transformnode",
-      "name": "Transform Node",
-      "transform": {
-        "position": [
-          0,
-          0.49086952209472656,
-          -8.672126770019531
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          2
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "physics": {
-        "enabled": false,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "box",
-        "isCollider": false,
-        "isTrigger": false
-      },
-      "parentId": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a"
     },
     {
       "id": "light1",
@@ -142,7 +120,7 @@
       "transform": {
         "position": [
           0,
-          15,
+          10,
           0
         ],
         "rotation": [
@@ -154,7 +132,7 @@
       "enabled": true,
       "light": {
         "type": "Hemispheric",
-        "intensity": 0.4,
+        "intensity": 2,
         "color": [
           1,
           1,
@@ -169,41 +147,1828 @@
       }
     },
     {
-      "id": "defaultCube",
+      "id": "root::avatar",
+      "kind": "model",
+      "name": "avatar",
+      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/avatar.glb",
+      "transform": {
+        "position": [
+          0.1653428077697754,
+          -0.9818030595779419,
+          -0.3033473491668701
+        ],
+        "rotation": [
+          0,
+          -7.502261212266599e-8,
+          0
+        ],
+        "scaling": [
+          7.0000000000000195,
+          1,
+          7.0000000000000195
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "assetId": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/avatar.glb",
+        "file": "avatar.glb",
+        "importedAsset": true
+      },
+      "parentId": "d4327a08-28fe-4195-8869-09b5feefedf1"
+    },
+    {
+      "id": "d4327a08-28fe-4195-8869-09b5feefedf1",
       "kind": "mesh",
-      "name": "Cube",
+      "name": "User_Mesh",
+      "transform": {
+        "position": [
+          4.480669021606445,
+          0.9037495255470276,
+          10.906243324279785
+        ],
+        "rotation": [
+          0,
+          -2.5132741228718345,
+          0
+        ],
+        "scaling": [
+          0.10000000149011612,
+          0.7,
+          0.10000000149011612
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "primitiveType": "cone"
+      },
+      "physics": {
+        "enabled": true,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0,
+        "friction": 0,
+        "impostor": "sphere",
+        "isCollider": false,
+        "isTrigger": false
+      },
+      "inputControl": {
+        "locomotionType": "Grounded Avatar",
+        "speedBoostEnabled": true,
+        "blendTime": 0.5,
+        "speed": 0.03,
+        "speedBoostMultiplier": 2,
+        "speedBoostKey": {
+          "key": "ShiftLeft"
+        },
+        "idleAnimationId": "idle",
+        "idleAnimationName": "idle",
+        "forward": {
+          "keyBinding": {
+            "key": "KeyW"
+          },
+          "animationId": "walk",
+          "animationName": "walk",
+          "speedBoostAnimationId": "run",
+          "speedBoostAnimationName": "run"
+        },
+        "backward": {
+          "keyBinding": {
+            "key": "KeyS"
+          },
+          "animationId": "walk_backward",
+          "animationName": "walk_backward",
+          "speedBoostAnimationId": "run_backward",
+          "speedBoostAnimationName": "run_backward"
+        },
+        "turnLeft": {
+          "keyBinding": {
+            "key": "KeyD"
+          },
+          "animationId": "walk",
+          "animationName": "walk",
+          "speedBoostAnimationId": "run",
+          "speedBoostAnimationName": "run"
+        },
+        "turnRight": {
+          "keyBinding": {
+            "key": "KeyA"
+          },
+          "animationId": "walk",
+          "animationName": "walk",
+          "speedBoostAnimationId": "run",
+          "speedBoostAnimationName": "run"
+        },
+        "jump": {
+          "keyBinding": {
+            "key": "Space"
+          },
+          "animationId": "jump",
+          "animationName": "jump",
+          "backwardAnimationId": "jump_backward",
+          "backwardAnimationName": "jump_backward"
+        },
+        "isActiveController": true,
+        "active": true
+      }
+    },
+    {
+      "id": "root::warehouse",
+      "kind": "model",
+      "name": "warehouse_root",
+      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse.gltf",
       "transform": {
         "position": [
           0,
-          2.299576997756958,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
           0
         ],
         "scaling": [
           1,
           1,
           1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "assetId": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse.gltf",
+        "file": "warehouse.gltf",
+        "importedAsset": true
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-emissive-lights-m1v4xv",
+      "kind": "mesh",
+      "name": "mk_Emissive_Lights",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
         ],
         "rotation": [
           0,
           0,
           0
+        ],
+        "scaling": [
+          1,
+          0.6650012135505676,
+          1
         ]
       },
       "visible": true,
       "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Emissive_Lights"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-glass-ybpt7z",
+      "kind": "mesh",
+      "name": "mk_Glass",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0.0027475589886307716
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          8.54892349243164,
+          4.067050457000732,
+          15.459023475646973
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Glass"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-metal-structure-prgu2w",
+      "kind": "mesh",
+      "name": "mk_Metal_Structure",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Metal_Structure"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-black-pipes-y3hp74",
+      "kind": "mesh",
+      "name": "mk_Black_Pipes",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          6.430152416229248,
+          6.430152416229248,
+          13.361656188964844
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Black_Pipes"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-soft-metal-bhu9qm",
+      "kind": "mesh",
+      "name": "mk_Soft_Metal",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          6.430152416229248,
+          6.430152416229248,
+          13.361656188964844
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Soft_Metal"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-spot-lights-n0nth8",
+      "kind": "mesh",
+      "name": "mk_Spot_Lights",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          0.6650012135505676,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Spot_Lights"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-plastic-s4qvt0",
+      "kind": "mesh",
+      "name": "mk_Plastic",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          3.4142589569091797,
+          -0.4277579188346863,
+          0.8080892562866211
+        ],
+        "rotation": [
+          0,
+          1.5707964953822937,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Plastic"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-air-vent-0otrz6",
+      "kind": "mesh",
+      "name": "mk_Air_Vent",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          2.8102710247039795,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Air_Vent"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-collider-79fxk2",
+      "kind": "mesh",
+      "name": "mk_collider",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": false,
+      "enabled": false,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_collider"
+      },
       "physics": {
         "enabled": true,
         "type": "dynamic",
         "mass": 1,
         "restitution": 0.3,
-        "friction": 1,
-        "impostor": "convexHull",
+        "friction": 0.5,
+        "impostor": "meshCollider",
         "isCollider": false,
         "isTrigger": false
       }
     },
     {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive0-zv9h7e",
+      "id": "root::warehouse::mesh::mk-air-vent-mesh-h6h13l",
+      "kind": "mesh",
+      "name": "mk_Air_Vent_Mesh",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Air_Vent_Mesh"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-spiderwebs-lfvznl",
+      "kind": "mesh",
+      "name": "mk_Spiderwebs",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -8.51244068145752,
+          3.681640386581421,
+          10.62971305847168
+        ],
+        "rotation": [
+          0.14369509563120972,
+          -0.007573795129968244,
+          -1.5720682322913415
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Spiderwebs"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-thermostat-nci5uc",
+      "kind": "mesh",
+      "name": "mk_thermostat",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          2.209167957305908,
+          1.55159330368042,
+          11.875114440917969
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_thermostat"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-syringe-0r1dkh",
+      "kind": "mesh",
+      "name": "mk_syringe",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          7.702325820922852,
+          0.7777552604675293,
+          8.875604629516602
+        ],
+        "rotation": [
+          -8.742277657347596e-8,
+          3.141592653589793,
+          3.141592653589793
+        ],
+        "scaling": [
+          2,
+          2,
+          2
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_syringe"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-tempscreen-ukahme",
+      "kind": "mesh",
+      "name": "mk_tempScreen",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          2.209167957305908,
+          1.55159330368042,
+          11.875114440917969
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_tempScreen"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-stairs-7vwjkh",
+      "kind": "mesh",
+      "name": "mk_Stairs",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0.03458160161972046,
+          0
+        ],
+        "rotation": [
+          1.5707963267948966,
+          1.5707963267948966,
+          0
+        ],
+        "scaling": [
+          0.43668100237846375,
+          0.43668100237846375,
+          0.34934481978416443
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Stairs"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-ac-tables-wq4ap5",
+      "kind": "mesh",
+      "name": "mk_AC_Tables",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          0.08463911712169647,
+          0.08188974857330322,
+          0.05784307420253754
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_AC_Tables"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-metal-roofing-grey-3nrjd2",
+      "kind": "mesh",
+      "name": "mk_Metal_Roofing_Grey",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Metal_Roofing_Grey"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-floor-yellow-gtsi7g",
+      "kind": "mesh",
+      "name": "mk_Floor_Yellow",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          8.914450645446777,
+          8.914450645446777,
+          15.855345726013184
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Floor_Yellow"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-doors-yl9rd7",
+      "kind": "mesh",
+      "name": "mk_Doors",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          4.067050457000732,
+          4.067050457000732,
+          4.067050457000732
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Doors"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-ac-tables-02-gsiw1j",
+      "kind": "mesh",
+      "name": "mk_AC_Tables_02",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          3.3238818645477295,
+          0,
+          7.016687393188477
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          0.14324945211410522,
+          0.13859622180461884,
+          0.09789786487817764
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_AC_Tables_02"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-paper-box-big-zhsphp",
+      "kind": "mesh",
+      "name": "mk_Paper_Box_Big",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -3.0370230674743652,
+          0,
+          3.979154348373413
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Paper_Box_Big"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-wood-bamboo-hhuuo8",
+      "kind": "mesh",
+      "name": "mk_Wood_Bamboo",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          3.045246124267578,
+          0.8329222202301025,
+          3.72715163230896
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          0.0010000000474974513,
+          0.0010000000474974513,
+          0.0010000000474974513
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Wood_Bamboo"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-banana-y0d067",
+      "kind": "mesh",
+      "name": "mk_Banana",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          3.2130467891693115,
+          0.8566516637802124,
+          4.425528049468994
+        ],
+        "rotation": [
+          -0.9305876415408028,
+          -2.2564290131991087,
+          -0.9631205980761068
+        ],
+        "scaling": [
+          0.04677196592092514,
+          0.04677196964621544,
+          0.04677195847034454
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Banana"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-01-8fb1hs",
+      "kind": "mesh",
+      "name": "mk_Shelves_01",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -2.9592580795288086,
+          0.022288158535957336,
+          -3.078235626220703
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Shelves_01"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-02-bpoxx4",
+      "kind": "mesh",
+      "name": "mk_Shelves_02",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -2.9592580795288086,
+          0.022288158535957336,
+          -3.078235626220703
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Shelves_02"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-03-14yeqp",
+      "kind": "mesh",
+      "name": "mk_Shelves_03",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -7.11619758605957,
+          0.022288158535957336,
+          -4.364552021026611
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Shelves_03"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-04-i39sjy",
+      "kind": "mesh",
+      "name": "mk_Shelves_04",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          7.349264144897461,
+          0.022288158535957336,
+          -4.364552021026611
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Shelves_04"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-05-7yzy1u",
+      "kind": "mesh",
+      "name": "mk_Shelves_05",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -7.11619758605957,
+          0.022288158535957336,
+          5.552231788635254
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Shelves_05"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-06-vxe769",
+      "kind": "mesh",
+      "name": "mk_Shelves_06",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          7.349264144897461,
+          0.022288158535957336,
+          5.552231788635254
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Shelves_06"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-07-uzoa7w",
+      "kind": "mesh",
+      "name": "mk_Shelves_07",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -7.11619758605957,
+          0.022288158535957336,
+          14.261384963989258
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Shelves_07"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-boxes-01-t4ysow",
+      "kind": "mesh",
+      "name": "mk_shelves_boxes_01",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -2.9592580795288086,
+          0.022288158535957336,
+          -3.078235626220703
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_shelves_boxes_01"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-boxes-02-14onw3",
+      "kind": "mesh",
+      "name": "mk_shelves_boxes_02",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -2.9592580795288086,
+          0.022288158535957336,
+          -3.078235626220703
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_shelves_boxes_02"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-boxes-03-8wfad8",
+      "kind": "mesh",
+      "name": "mk_shelves_boxes_03",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -7.11619758605957,
+          0.022288158535957336,
+          -4.364552021026611
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_shelves_boxes_03"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-boxes-04-u7q4qh",
+      "kind": "mesh",
+      "name": "mk_shelves_boxes_04",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          7.349264144897461,
+          0.022288158535957336,
+          -4.364552021026611
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_shelves_boxes_04"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-boxes-05-0fhsty",
+      "kind": "mesh",
+      "name": "mk_shelves_boxes_05",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -7.11619758605957,
+          0.022288158535957336,
+          5.552231788635254
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_shelves_boxes_05"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-boxes-06-ad7u2c",
+      "kind": "mesh",
+      "name": "mk_shelves_boxes_06",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          7.349264144897461,
+          0.022288158535957336,
+          5.552231788635254
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_shelves_boxes_06"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-boxes-07-4w5wl2",
+      "kind": "mesh",
+      "name": "mk_shelves_boxes_07",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -7.11619758605957,
+          0.022288158535957336,
+          14.261384963989258
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_shelves_boxes_07"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-shelves-pilars-obzh0a",
+      "kind": "mesh",
+      "name": "mk_Shelves_pilars",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -7.11619758605957,
+          0.022288158535957336,
+          14.261384963989258
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Shelves_pilars"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-fishes-wspmk6",
+      "kind": "mesh",
+      "name": "mk_Fishes",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          3.414259195327759,
+          -0.4277579188346863,
+          0.8080892562866211
+        ],
+        "rotation": [
+          0,
+          1.5707964953822937,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Fishes"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-paper-boxes-mhli6l",
+      "kind": "mesh",
+      "name": "mk_Paper_Boxes",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          3.4142589569091797,
+          -0.4277579188346863,
+          0.8080892562866211
+        ],
+        "rotation": [
+          0,
+          1.5707964953822937,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Paper_Boxes"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-forklift-qwxbgo",
+      "kind": "mesh",
+      "name": "mk_Forklift",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -5.6971893310546875,
+          0.022427797317504883,
+          -4.287718772888184
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Forklift"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-floor-bzv6yo",
+      "kind": "mesh",
+      "name": "mk_Floor",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          8.914450645446777,
+          8.914450645446777,
+          15.855345726013184
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_Floor"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-petfoodgroup-1bru7j",
+      "kind": "mesh",
+      "name": "mk_petFoodGroup",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -3.189105272293091,
+          0.8396831154823303,
+          4.0449957847595215
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_petFoodGroup"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-packagedproducts3-20rp17",
+      "kind": "mesh",
+      "name": "mk_packagedProducts3",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -2.858103036880493,
+          1.0140146017074585,
+          1.2141094207763672
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1.2999999523162842,
+          1.2999999523162842,
+          1.2999999523162842
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_packagedProducts3"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-thermometers-zva9i2",
+      "kind": "mesh",
+      "name": "mk_thermometers",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          7.3550639152526855,
+          0.7776148319244385,
+          8.6521577835083
+        ],
+        "rotation": [
+          1.5707963267948966,
+          -1.5707962075856141,
+          0
+        ],
+        "scaling": [
+          0.018191369250416756,
+          0.018191369250416756,
+          0.018191369250416756
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_thermometers"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-supplies-x99mav",
+      "kind": "mesh",
+      "name": "mk_supplies",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          7.245731353759766,
+          0.7767017483711243,
+          8.286314964294434
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          1.5707963267948966,
+          0
+        ],
+        "scaling": [
+          0.11386918276548386,
+          0.11386918276548386,
+          0.11386918276548386
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_supplies"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-drugsboxes-5h91da",
+      "kind": "mesh",
+      "name": "mk_drugsBoxes",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          7.58516263961792,
+          0.7774680852890015,
+          10.604247093200684
+        ],
+        "rotation": [
+          -1.5707963267948966,
+          -1.5707960883763459,
+          0
+        ],
+        "scaling": [
+          0.11386917531490326,
+          0.11386917531490326,
+          0.11386917531490326
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_drugsBoxes"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-cosmeticboxes-1d8ujb",
+      "kind": "mesh",
+      "name": "mk_cosmeticBoxes",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -3.1871166229248047,
+          0.7752083539962769,
+          7.382847785949707
+        ],
+        "rotation": [
+          0,
+          3.141592653589793,
+          0
+        ],
+        "scaling": [
+          2,
+          2,
+          2
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_cosmeticBoxes"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-woodenpallets-dz7mth",
+      "kind": "mesh",
+      "name": "mk_woodenPallets",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          4.255419731140137,
+          0.3188970386981964,
+          -14.33909797668457
+        ],
+        "rotation": [
+          0,
+          3.0803267085572794,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_woodenPallets"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-medkits-fk5xeu",
+      "kind": "mesh",
+      "name": "mk_medkits",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          7.275551795959473,
+          0.7741566300392151,
+          7.684042930603027
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1.1493512392044067,
+          1.1493511199951172,
+          1.1493511199951172
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_medkits"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-apples-01-musmn1",
+      "kind": "mesh",
+      "name": "mk_apples_01",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          3.631639242172241,
+          0.7973779439926147,
+          7.672635078430176
+        ],
+        "rotation": [
+          0,
+          -0.03475438247211005,
+          0
+        ],
+        "scaling": [
+          0.004507516510784626,
+          0.004507516510784626,
+          0.004507516510784626
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_apples_01"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-apples-02-fbt7xa",
+      "kind": "mesh",
+      "name": "mk_apples_02",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          3.631639242172241,
+          0.7973779439926147,
+          7.672635078430176
+        ],
+        "rotation": [
+          0,
+          -0.03475438247211005,
+          0
+        ],
+        "scaling": [
+          0.004507516510784626,
+          0.004507516510784626,
+          0.004507516510784626
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_apples_02"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-packagedproducts2-iid8ic",
+      "kind": "mesh",
+      "name": "mk_packagedProducts2",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -2.858103036880493,
+          1.0140146017074585,
+          1.2141094207763672
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1.2999999523162842,
+          1.2999999523162842,
+          1.2999999523162842
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_packagedProducts2"
+      }
+    },
+    {
+      "id": "root::warehouse::mesh::mk-packagedproducts1-n13ldm",
+      "kind": "mesh",
+      "name": "mk_packagedProducts1",
+      "parentId": "root::warehouse",
+      "transform": {
+        "position": [
+          -2.858103036880493,
+          1.0140146017074585,
+          1.2141094207763672
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1.2999999523162842,
+          1.2999999523162842,
+          1.2999999523162842
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::warehouse",
+        "sourceMeshName": "mk_packagedProducts1"
+      }
+    },
+    {
+      "id": "7f216f98-3514-41a8-a528-0f82edf89785",
+      "kind": "audio",
+      "name": "Audio",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "audio": {
+        "volume": 1,
+        "loop": true,
+        "spatialAudio": false,
+        "radius": 10,
+        "autoPlay": false,
+        "isPlaying": false,
+        "audioFile": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/industry-warehouse-large-factory-warehouse-sound-effect-167909183_nw_prev.m4a"
+      },
+      "metadata": {}
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive0-16kqv7",
       "kind": "mesh",
       "name": "avaturn_look_0_primitive0",
       "parentId": "root::avatar",
@@ -230,20 +1995,10 @@
         "importedAsset": true,
         "sourceModelId": "root::avatar",
         "sourceMeshName": "avaturn_look_0_primitive0"
-      },
-      "physics": {
-        "enabled": false,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "convexHull",
-        "isCollider": false,
-        "isTrigger": false
       }
     },
     {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive1-28khwb",
+      "id": "root::avatar::mesh::avaturn-look-0-primitive1-7nwegr",
       "kind": "mesh",
       "name": "avaturn_look_0_primitive1",
       "parentId": "root::avatar",
@@ -270,20 +2025,10 @@
         "importedAsset": true,
         "sourceModelId": "root::avatar",
         "sourceMeshName": "avaturn_look_0_primitive1"
-      },
-      "physics": {
-        "enabled": false,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "box",
-        "isCollider": false,
-        "isTrigger": false
       }
     },
     {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive2-rtk9ur",
+      "id": "root::avatar::mesh::avaturn-look-0-primitive2-2ty9nq",
       "kind": "mesh",
       "name": "avaturn_look_0_primitive2",
       "parentId": "root::avatar",
@@ -310,20 +2055,10 @@
         "importedAsset": true,
         "sourceModelId": "root::avatar",
         "sourceMeshName": "avaturn_look_0_primitive2"
-      },
-      "physics": {
-        "enabled": false,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "box",
-        "isCollider": false,
-        "isTrigger": false
       }
     },
     {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive3-dz5uf3",
+      "id": "root::avatar::mesh::avaturn-look-0-primitive3-5ucyhx",
       "kind": "mesh",
       "name": "avaturn_look_0_primitive3",
       "parentId": "root::avatar",
@@ -350,20 +2085,10 @@
         "importedAsset": true,
         "sourceModelId": "root::avatar",
         "sourceMeshName": "avaturn_look_0_primitive3"
-      },
-      "physics": {
-        "enabled": false,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "box",
-        "isCollider": false,
-        "isTrigger": false
       }
     },
     {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive4-q2u7jw",
+      "id": "root::avatar::mesh::avaturn-look-0-primitive4-y3ez40",
       "kind": "mesh",
       "name": "avaturn_look_0_primitive4",
       "parentId": "root::avatar",
@@ -390,27 +2115,17 @@
         "importedAsset": true,
         "sourceModelId": "root::avatar",
         "sourceMeshName": "avaturn_look_0_primitive4"
-      },
-      "physics": {
-        "enabled": false,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "box",
-        "isCollider": false,
-        "isTrigger": false
       }
     },
     {
-      "id": "b32767c3-8cc2-43e9-9025-8a490d2be594",
-      "kind": "mesh",
-      "name": "Cone",
+      "id": "2b6d1e75-00e0-400b-9bc1-b4c1da2e4f38",
+      "kind": "audio",
+      "name": "Audio_05",
       "transform": {
         "position": [
-          0,
-          6.914462566375732,
-          0
+          3.128896951675415,
+          0.753027081489563,
+          0.7670068740844727
         ],
         "rotation": [
           0,
@@ -425,746 +2140,312 @@
       },
       "visible": true,
       "enabled": true,
-      "metadata": {
-        "primitiveType": "cone"
-      },
-      "physics": {
-        "enabled": true,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0,
-        "impostor": "mesh",
-        "isCollider": false,
-        "isTrigger": false
-      }
-    },
-    {
-      "id": "d3198ad5-9785-46e5-9f79-f5a1edf936ce",
-      "kind": "mesh",
-      "name": "Sphere",
-      "transform": {
-        "position": [
-          0,
-          4.59812068939209,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "primitiveType": "sphere"
-      },
-      "physics": {
-        "enabled": true,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0,
-        "impostor": "convexHull",
-        "isCollider": false,
-        "isTrigger": false
-      }
-    },
-    {
-      "id": "root::avatar",
-      "kind": "model",
-      "name": "avatar",
-      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/avatar.glb",
-      "transform": {
-        "position": [
-          -5.9604645663569045e-9,
-          -1.0079426765441895,
-          0.20161151885986328
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          2,
-          1,
-          2
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "assetId": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/avatar.glb",
-        "file": "avatar.glb",
-        "importedAsset": true
-      },
-      "inputControl": {
-        "locomotionType": "none",
-        "blendTime": 0.15,
-        "speed": 0.03,
-        "forward": {
-          "keyBinding": {
-            "key": "KeyW"
-          },
-          "animationId": "walk",
-          "animationName": "walk",
-          "speedBoostAnimationId": "run",
-          "speedBoostAnimationName": "run"
-        },
-        "idleAnimationId": "idle",
-        "idleAnimationName": "idle",
-        "backward": {
-          "keyBinding": {
-            "key": "KeyS"
-          },
-          "animationId": "walk_backward",
-          "animationName": "walk_backward",
-          "speedBoostAnimationId": "run_backward",
-          "speedBoostAnimationName": "run_backward"
-        },
-        "speedBoostEnabled": true,
-        "speedBoostMultiplier": 1.5,
-        "speedBoostKey": {
-          "key": "ShiftLeft"
-        },
-        "turnLeft": {
-          "keyBinding": {
-            "key": "KeyD"
-          },
-          "animationId": "walk",
-          "animationName": "walk",
-          "speedBoostAnimationId": "run",
-          "speedBoostAnimationName": "run"
-        },
-        "turnRight": {
-          "keyBinding": {
-            "key": "KeyA"
-          },
-          "animationId": "walk",
-          "animationName": "walk",
-          "speedBoostAnimationId": "run",
-          "speedBoostAnimationName": "run"
-        },
-        "jump": {
-          "keyBinding": {
-            "key": "Space"
-          },
-          "animationId": "jump",
-          "animationName": "jump",
-          "backwardAnimationId": "jump_backward",
-          "backwardAnimationName": "jump_backward"
-        }
-      },
-      "physics": {
-        "enabled": false,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "capsule",
-        "isCollider": false,
-        "isTrigger": false
-      },
-      "parentId": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a"
-    },
-    {
-      "id": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a",
-      "kind": "mesh",
-      "name": "Cone_01",
-      "transform": {
-        "position": [
-          0,
-          2.9398210048675537,
-          -5.290708541870117
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          0.5,
-          1,
-          0.5
-        ]
-      },
-      "visible": false,
-      "enabled": true,
-      "metadata": {
-        "primitiveType": "cone"
-      },
-      "physics": {
-        "enabled": true,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 1,
-        "impostor": "capsule",
-        "isCollider": false,
-        "isTrigger": false,
-        "keepUpright": true
-      },
-      "inputControl": {
-        "locomotionType": "Grounded Avatar",
-        "forward": {
-          "keyBinding": {
-            "key": "KeyW"
-          },
-          "animationId": "walk",
-          "animationName": "walk",
-          "speedBoostAnimationId": "run",
-          "speedBoostAnimationName": "run"
-        },
-        "backward": {
-          "keyBinding": {
-            "key": "KeyS"
-          },
-          "animationId": "walk_backward",
-          "animationName": "walk_backward",
-          "speedBoostAnimationId": "run_backward",
-          "speedBoostAnimationName": "run_backward"
-        },
-        "turnLeft": {
-          "keyBinding": {
-            "key": "KeyD"
-          },
-          "animationId": "walk",
-          "animationName": "walk",
-          "speedBoostAnimationId": "run",
-          "speedBoostAnimationName": "run"
-        },
-        "turnRight": {
-          "keyBinding": {
-            "key": "KeyA"
-          },
-          "animationId": "walk",
-          "animationName": "walk",
-          "speedBoostAnimationId": "run",
-          "speedBoostAnimationName": "run"
-        },
-        "jump": {
-          "keyBinding": {
-            "key": "Space"
-          },
-          "animationId": "jump",
-          "animationName": "jump",
-          "backwardAnimationId": "jump_backward",
-          "backwardAnimationName": "jump_backward"
-        },
-        "idleAnimationId": "idle",
-        "idleAnimationName": "idle",
-        "blendTime": 0.15,
-        "speed": 0.03,
-        "speedBoostEnabled": true,
-        "speedBoostKey": {
-          "key": "ShiftLeft"
-        },
-        "speedBoostMultiplier": 1.5
-      }
-    },
-    {
-      "id": "ea93aaaa-4065-449c-9327-97360ce47738",
-      "kind": "mesh",
-      "name": "Cube_01",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          10,
-          1,
-          10
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "primitiveType": "cube"
-      },
-      "physics": {
-        "enabled": true,
-        "type": "static",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "box",
-        "isCollider": false,
-        "isTrigger": false
-      }
-    },
-    {
-      "id": "c0f696ac-3b73-4cf9-92a6-3893f152d1e6",
-      "kind": "particle",
-      "name": "Particle Effect",
-      "transform": {
-        "position": [
-          -0.1009206771850586,
-          -0.20476245880126953,
-          0.24107074737548828
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          2,
-          1,
-          2
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "particle": {
-        "id": "c0f696ac-3b73-4cf9-92a6-3893f152d1e6",
-        "name": "Particle Effect",
-        "runtime": "ParticleSystem",
-        "capacity": 200,
-        "playOnStart": true,
-        "disposeOnStop": false,
-        "billboardMode": "ALL",
-        "blendMode": "STANDARD",
-        "updateSpeed": 0.01,
-        "emitRate": 50,
-        "emitter": {
-          "kind": "point"
-        },
-        "minEmitPower": 0,
-        "maxEmitPower": 0,
-        "gravity": [
-          0,
-          -2,
-          0
-        ],
-        "direction1": [
-          0,
-          0,
-          0
-        ],
-        "direction2": [
-          0,
-          0,
-          0
-        ],
-        "minAngularSpeed": -1,
-        "maxAngularSpeed": 1,
-        "minSize": 0.1,
-        "maxSize": 0.2,
-        "minLifeTime": 0.2,
-        "maxLifeTime": 0.5,
-        "enableColorGradients": true,
-        "colorGradients": [
-          {
-            "t": 0,
-            "r": 0.3568627450980392,
-            "g": 0.3254901960784314,
-            "b": 0.12156862745098039,
-            "a": 0
-          },
-          {
-            "t": 0.5,
-            "r": 0.47058823529411764,
-            "g": 0.49411764705882355,
-            "b": 0.403921568627451,
-            "a": 0.51
-          },
-          {
-            "t": 1,
-            "r": 0.5098039215686274,
-            "g": 0.4588235294117647,
-            "b": 0.45098039215686275,
-            "a": 0
-          }
-        ]
-      },
-      "parentId": "2e071bb9-e4bb-4a33-a5fa-7c6c95f4089a"
-    },
-    {
-      "id": "b2109d7d-6870-4675-8c8a-8da5ff2127c4",
-      "kind": "particle",
-      "name": "Particle Effect_01",
-      "transform": {
-        "position": [
-          0.12519961595535278,
-          2,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "particle": {
-        "id": "b2109d7d-6870-4675-8c8a-8da5ff2127c4",
-        "name": "Particle Effect_01",
-        "runtime": "ParticleSystem",
-        "capacity": 200,
-        "playOnStart": true,
-        "disposeOnStop": false,
-        "billboardMode": "ALL",
-        "blendMode": "STANDARD",
-        "updateSpeed": 0.01,
-        "emitRate": 50,
-        "emitter": {
-          "kind": "sphere",
-          "radius": 200,
-          "radiusRange": 0
-        },
-        "minEmitPower": 0,
-        "maxEmitPower": 0,
-        "gravity": [
-          0,
-          0,
-          0
-        ],
-        "direction1": [
-          0,
-          0,
-          0
-        ],
-        "direction2": [
-          0,
-          0,
-          0
-        ],
-        "minAngularSpeed": -1,
-        "maxAngularSpeed": 1,
-        "minSize": 3,
-        "maxSize": 7,
-        "minLifeTime": 10,
-        "maxLifeTime": 20,
-        "enableColorGradients": true,
-        "colorGradients": [
-          {
-            "t": 0,
-            "r": 0.0392156862745098,
-            "g": 0.0392156862745098,
-            "b": 0.0392156862745098,
-            "a": 0
-          },
-          {
-            "t": 0.25,
-            "r": 0.06666666666666667,
-            "g": 0.7215686274509804,
-            "b": 0.0196078431372549,
-            "a": 1
-          },
-          {
-            "t": 0.5,
-            "r": 0.0196078431372549,
-            "g": 0.0196078431372549,
-            "b": 0.0196078431372549,
-            "a": 0.37
-          },
-          {
-            "t": 0.75,
-            "r": 0.9450980392156862,
-            "g": 0.01568627450980392,
-            "b": 0.01568627450980392,
-            "a": 1
-          },
-          {
-            "t": 1,
-            "r": 0.0196078431372549,
-            "g": 0.0196078431372549,
-            "b": 0.0196078431372549,
-            "a": 0
-          }
-        ],
-        "textureUrl": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/star_04.png"
-      }
-    },
-    {
-      "id": "4d2ba1f4-bfe3-46bd-b99d-c52c8ff0e4f6",
-      "kind": "particle",
-      "name": "Particle Effect_02",
-      "transform": {
-        "position": [
-          -0.0005599153810180724,
-          9.865151405334473,
-          -0.028292672708630562
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "particle": {
-        "id": "4d2ba1f4-bfe3-46bd-b99d-c52c8ff0e4f6",
-        "name": "Particle Effect_02",
-        "runtime": "ParticleSystem",
-        "capacity": 200,
-        "playOnStart": true,
-        "disposeOnStop": false,
-        "billboardMode": "ALL",
-        "blendMode": "STANDARD",
-        "updateSpeed": 0.01,
-        "emitRate": 50,
-        "emitter": {
-          "kind": "point"
-        },
-        "minEmitPower": 1,
-        "maxEmitPower": 2,
-        "gravity": [
-          0,
-          -2,
-          0
-        ],
-        "direction1": [
-          -0.5,
-          1,
-          -0.5
-        ],
-        "direction2": [
-          0.5,
-          1.5,
-          0.5
-        ],
-        "minAngularSpeed": -1,
-        "maxAngularSpeed": 1,
-        "minSize": 0.5,
-        "maxSize": 1.5,
-        "minLifeTime": 2,
-        "maxLifeTime": 4,
-        "enableColorGradients": true,
-        "colorGradients": [
-          {
-            "t": 0,
-            "r": 1,
-            "g": 1,
-            "b": 1,
-            "a": 0.2
-          },
-          {
-            "t": 0.5,
-            "r": 0.8,
-            "g": 0.8,
-            "b": 1,
-            "a": 0.8
-          },
-          {
-            "t": 1,
-            "r": 0.6,
-            "g": 0.6,
-            "b": 0.9,
-            "a": 0
-          }
-        ],
-        "textureUrl": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/star_04.png"
-      }
-    },
-    {
-      "id": "d43dcb17-0490-47e8-b0a1-4269bacead2b",
-      "kind": "mesh",
-      "name": "Cube_02",
-      "transform": {
-        "position": [
-          0,
-          10.906512260437012,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1.2777682542800903,
-          2.6984686851501465,
-          1.4064462184906006
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "primitiveType": "cube"
-      },
-      "physics": {
-        "enabled": true,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0,
-        "impostor": "mesh",
-        "isCollider": false,
-        "isTrigger": false
-      }
-    },
-    {
-      "id": "1a0f44ac-4f5a-46ae-b60a-b5dc1a8cc3da",
-      "kind": "mesh",
-      "name": "Plane",
-      "transform": {
-        "position": [
-          0,
-          -14.257487297058105,
-          0
-        ],
-        "rotation": [
-          1.57075,
-          0,
-          0
-        ],
-        "scaling": [
-          50,
-          50.00000937150935,
-          50.00000937150935
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "primitiveType": "plane"
-      },
-      "physics": {
-        "enabled": true,
-        "type": "static",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "box",
-        "isCollider": false,
-        "isTrigger": false
-      }
-    },
-    {
-      "id": "root::samsungbeach-zflip-v7",
-      "kind": "model",
-      "name": "SamsungBeach_ZFlip_v7",
-      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/Models/df440a4a-6f87-4c54-b545-1a02a679f8f0_SamsungBeach_ZFlip_v7.glb",
-      "transform": {
-        "position": [
-          0,
-          0,
-          -10.44238567352295
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "assetId": "2c1b99d7-e537-4246-8ddb-2b13293f5fe1",
-        "file": "SamsungBeach_ZFlip_v7.glb",
-        "importedAsset": true
-      }
-    },
-    {
-      "id": "root::samsungbeach-zflip-v7::mesh::mk-coloratlas-qh4ji5",
-      "kind": "mesh",
-      "name": "mk_ColorAtlas",
-      "parentId": "root::samsungbeach-zflip-v7",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::samsungbeach-zflip-v7",
-        "sourceMeshName": "mk_ColorAtlas"
-      }
-    },
-    {
-      "id": "root::samsungbeach-zflip-v7::mesh::mk-textured-aggregated-809372",
-      "kind": "mesh",
-      "name": "mk_Textured_Aggregated",
-      "parentId": "root::samsungbeach-zflip-v7",
-      "transform": {
-        "position": [
-          0,
-          0,
-          4.01414155960083
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::samsungbeach-zflip-v7",
-        "sourceMeshName": "mk_Textured_Aggregated"
+      "audio": {
+        "volume": 1,
+        "loop": true,
+        "spatialAudio": true,
+        "radius": 4,
+        "audioFile": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/calm-elevator-music-music-157584855_nw_prev.m4a"
       }
     }
   ],
   "materialOverrides": {
-    "Collider": {
+    "Metal_Aluminium_Sandblasted": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_BaseColor_Darker.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_Metallic-Sandblaster_Aluminium_Roughness.png"
+    },
+    "mk_Spot_Lights": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/21-1.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/21-21.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/21.png"
+    },
+    "mk_Air_Vent": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_BaseColor_Darker.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_Metallic-Sandblaster_Aluminium_Roughness.png"
+    },
+    "mk_Air_Vent_Mesh": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_BaseColor_Darker.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_Metallic-Sandblaster_Aluminium_Roughness.png"
+    },
+    "mk_Spiderwebs.001": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/lambert4SG_baseColor.png"
+    },
+    "Temp controller": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Interface%20de%20Temperatura%20e%20Umidade.png",
+      "emissiveTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Interface%20de%20Temperatura%20e%20Umidade.png"
+    },
+    "Syringe_Aggregated": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Syringe_Aggregated_Material_diffuse-Syringe_Aggregated_Material_alpha.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Syringe_Aggregated_Material_metalness-Syringe_Aggregated_Material_roughness.png"
+    },
+    "mk_Stairs": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/22-1.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/22-22.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/22.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Stairs_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "ColorAtlas_mk_AC_Tables": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/AtlasColorTexture.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/AtlasGrayTexture.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_AC_Tables_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Metal_Roofing_Grey": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Corrugated_Metal_Roofing_Product_BaseColor.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Corrugated_Metal_Roofing_Product_Roughness.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Corrugated_Metal_Roofing_Product_Normal.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Metal_Roofing_Grey_lightmap.png",
+      "useLightmapAsShadowmap": true,
+      "backFaceCulling": true
+    },
+    "mk_Resin_Epoxy_Yellow": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/1Color.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Resin_Epoxy_Logo_Roughness_3.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Floor_Yellow_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Doors": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/05_%20gerbang_Aggregated_Material-1.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/05_%20gerbang_Aggregated_Material-05_%20gerbang_Aggregated_Material.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/05_%20gerbang_Aggregated_Material.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Doors_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_AC_Tables_02": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/28-1.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/28-28.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/28.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_AC_Tables_02_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Paper_Box_Big": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/vgyidauaw_1K_Basecolor.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/vgyidauaw_1K_Roughness.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/vgyidauaw_1K_Normal.jpg",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Paper_Box_Big_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Wood_Bamboo": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/wood_bamboo_baseColor.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/wood_bamboo_metallic-wood_bamboo_roughness.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/wood_bamboo_Bamboo_Wood_normal.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Wood_Bamboo_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Banana": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/banana.jpg",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Banana_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Shelf_01": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_01_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Shelf_02": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_02_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Shelf_03": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_03_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Shelf_04": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_04_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Shelf_05": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_05_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Shelf_06": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_06_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Shelf_07": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_07_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Paper_Boxes_01": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_01_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Paper_Boxes_02": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_02_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Paper_Boxes_03": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_03_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Paper_Boxes_04": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_04_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Paper_Boxes_05": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_05_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Paper_Boxes_06": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_06_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Paper_Boxes_07": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_07_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Shelves_pilars": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_4.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_5.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_pilars_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Fishes": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0-1.jpg",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Fishes_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Paper_Boxes": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Paper_Boxes_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Forklift": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/toyota_forklift_3t_low_Material_BaseColor.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/toyota_forklift_3t_low_Material_Metallic-toyota_forklift_3t_low_Material_Roughness.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/toyota_forklift_3t_low_Material_Normal.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Forklift_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Resin_Epoxy": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/1Color.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Resin_Epoxy_Logo_Roughness_3.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Floor_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_petFood.001_Remeshed_Aggregated_Material.001": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_petFood_001_Remeshed_Aggregated_Material-1.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_petFood_001_Remeshed_Aggregated_Material-mk_petFood_001_Remeshed_Aggregated_Material.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_petFood_001_Remeshed_Aggregated_Material.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_petFoodGroup_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_packagedProducts3": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-1.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-mk_packagedProducts.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_packagedProducts3_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "Thermometer": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/lambert1_Base_Color.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/lambert1_Metallic-lambert1_Roughness.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/lambert1_Normal_OpenGL.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_thermometers_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "Supplies": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1-1.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2-1.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_supplies_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "Drugs": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0-1.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3-Image_1.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2-2.png",
+      "ambientTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3-Image_1.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_drugsBoxes_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "Cosmetics boxes_Agg_Aggregated_Material": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Cosmetics%20boxes_Agg_Aggregated_Material_diffuse.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Cosmetics%20boxes_Agg_Aggregated_Material_metalness-Cosmetics%20boxes_Agg_Aggregated_Material_roughness.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Cosmetics%20boxes_Agg_Aggregated_Material_normal.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_cosmeticBoxes_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "Pallet": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0-2.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1-2.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2-3.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_woodenPallets_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "Medkit_Agg": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Medkit_Aggregated_Material_diffuse.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Medkit_Aggregated_Material_metalness-Medkit_Aggregated_Material_roughness.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Medkit_Aggregated_Material_normal.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_medkits_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Apples_01": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Apple1_u1_v1_diffuse.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Floor%20Dirt%20%202.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Apple1_u1_v1_normal.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_apples_01_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_Apples_02": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Apple2_u1_v1_diffuse.jpg",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Floor%20Dirt%20%202.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Apple2_u1_v1_normal.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_apples_02_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_packagedProducts2": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-1.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-mk_packagedProducts.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_packagedProducts2_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "mk_packagedProducts1": {
+      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-1.png",
+      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-mk_packagedProducts.png",
+      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts.png",
+      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_packagedProducts1_lightmap.png",
+      "useLightmapAsShadowmap": true
+    },
+    "__GLTFLoader._default": {
       "wireframe": false
-    },
-    "Material": {
-      "albedoColor": {
-        "r": 0,
-        "g": 0,
-        "b": 0
-      }
-    },
-    "skyboxMaterial": {
-      "reflectionTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/px.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nx.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/py.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/ny.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/pz.pnghttps://vtpjflkpgzjfveqepzvc.supabase.co/storage/v1/object/public/projects/867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nz.png",
-      "wireframe": true
-    },
-    "mk_Textured_Aggregated_Material": {
-      "emissiveTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/953343df-cea5-41ca-9e46-8e94e39c230b/nz.png"
     }
-  }
+  },
+  "deletedMaterials": [
+    "83cb0d45-db0d-4654-ade8-68e2cbe92a58::mat::2269",
+    "bd6d95de-d6f3-42b0-8b2e-84c9c523492c::mat::2272",
+    "ab772124-c035-4e2d-8302-04842022ef41::mat::2713",
+    "d4327a08-28fe-4195-8869-09b5feefedf1::mat::2262",
+    "80fa77fb-d9e7-4c74-9a7d-1786642c02e4::mat::2278"
+  ]
 }
