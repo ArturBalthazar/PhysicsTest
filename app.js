@@ -19,6 +19,18 @@
   
   // Camera tracking system variables
   let cameraTrackingManager = null;
+  
+  // Camera collision system variables
+  let cameraCollisionManager = null;
+  
+  // Audio system variables
+  let audioNodes = []; // Store audio objects for initialization
+  let audioInitialized = false;
+  let activeController = null; // Track active controller for spatial audio
+  
+  // Performance monitoring
+  let fpsCounter = null;
+  let lastFpsUpdate = 0;
 
   // Show loading
   function showLoading(message) {
@@ -204,6 +216,15 @@
       cameraTrackingManager = createCameraTrackingManager(scene, sceneGraph);
       cameraTrackingManager.initialize();
       console.log('📹 Camera tracking system initialized');
+      
+          // Initialize camera collision for preventing wall clipping
+      cameraCollisionManager = createCameraCollisionManager(scene, sceneGraph);
+      cameraCollisionManager.initialize();
+      console.log('📹 Camera collision system initialized');
+      
+      // Initialize FPS counter and audio system
+      setupFpsCounter(engine);
+      setupAudioSystem(sceneGraph);
     }
 
     // Apply material overrides after controls are initialized
@@ -247,6 +268,21 @@
       if (cameraTrackingManager) {
         cameraTrackingManager.dispose();
       }
+      if (cameraCollisionManager) {
+        cameraCollisionManager.dispose();
+      }
+      // Dispose audio elements
+      if (audioNodes) {
+        for (const audioNode of audioNodes) {
+          if (audioNode.audioElement) {
+            audioNode.audioElement.pause();
+            audioNode.audioElement.src = '';
+            audioNode.audioElement = null;
+          }
+        }
+        audioNodes = [];
+        audioInitialized = false;
+      }
     });
 
     // Hide loading overlay
@@ -255,6 +291,190 @@
   } catch (error) {
     showError('Failed to load scene: ' + error.message);
     console.error('Runtime error:', error);
+  }
+
+  // FPS Counter Setup
+  function setupFpsCounter(engine) {
+    fpsCounter = document.getElementById('fpsDisplay');
+    if (!fpsCounter) {
+      console.warn('FPS display element not found');
+      return;
+    }
+    
+    fpsCounter.textContent = 'FPS: --';
+    lastFpsUpdate = Date.now();
+    
+    // Update FPS every second using scene before render
+    scene.registerBeforeRender(function() {
+      const now = Date.now();
+      if (now - lastFpsUpdate > 1000) {
+        const fps = Math.round(engine.getFps());
+        fpsCounter.textContent = 'FPS: ' + fps;
+        
+        // Color code based on performance
+        if (fps >= 55) {
+          fpsCounter.style.color = '#22c55e'; // Green
+        } else if (fps >= 30) {
+          fpsCounter.style.color = '#f59e0b'; // Orange
+        } else {
+          fpsCounter.style.color = '#ef4444'; // Red
+        }
+        
+        lastFpsUpdate = now;
+      }
+    });
+    
+    console.log('📊 FPS counter enabled');
+  }
+
+  // Audio System Setup
+  function setupAudioSystem(sceneGraph) {
+    const initAudioBtn = document.getElementById('initAudioBtn');
+    if (initAudioBtn) {
+      initAudioBtn.addEventListener('click', function() {
+        initializeAudio(sceneGraph);
+      });
+      
+      // Update button state based on audio nodes
+      if (audioNodes.length === 0) {
+        initAudioBtn.disabled = true;
+        initAudioBtn.textContent = 'No Audio';
+      } else {
+        initAudioBtn.disabled = false;
+        initAudioBtn.textContent = 'Initialize Audio (' + audioNodes.length + ')';
+      }
+    }
+  }
+
+  // Initialize Audio System
+  function initializeAudio(sceneGraph) {
+    if (audioInitialized) {
+      console.log('🔊 Audio already initialized');
+      return;
+    }
+
+    console.log('🔊 Initializing ' + audioNodes.length + ' audio nodes...');
+    
+    // Find active controller for spatial audio
+    updateActiveController(sceneGraph);
+    
+    for (const audioNode of audioNodes) {
+      if (!audioNode.audioFile || !audioNode.enabled) {
+        continue;
+      }
+
+      try {
+        // Convert storage path to asset path
+        const audioUrl = 'assets/' + toRelativeAssetPath(audioNode.audioFile);
+        console.log('🔊 Loading audio: ' + audioNode.name + ' from ' + audioUrl);
+        
+        // Create audio element
+        const audio = new Audio(audioUrl);
+        audio.loop = audioNode.loop;
+        audio.volume = audioNode.spatialAudio ? 0 : audioNode.volume; // Start at 0 for spatial audio
+        
+        // Store reference
+        audioNode.audioElement = audio;
+        
+        // For non-spatial audio, just play it
+        if (!audioNode.spatialAudio) {
+          audio.play().catch(function(error) {
+            console.warn('Failed to play audio ' + audioNode.name + ':', error);
+          });
+          console.log('🔊 Started non-spatial audio: ' + audioNode.name + ' at volume ' + audio.volume);
+        } else {
+          // For spatial audio, start playing (volume will be controlled by distance)
+          audio.volume = 0; // Start muted, will be updated by spatial system
+          audio.play().catch(function(error) {
+            console.warn('Failed to play spatial audio ' + audioNode.name + ':', error);
+          });
+          console.log('🔊 Started spatial audio: ' + audioNode.name + ' (muted, will be controlled by distance)');
+        }
+        
+        console.log('✅ Audio initialized: ' + audioNode.name + ' (spatial: ' + audioNode.spatialAudio + ')');
+      } catch (error) {
+        console.error('Failed to initialize audio ' + audioNode.name + ':', error);
+      }
+    }
+
+    // Set up spatial audio update loop
+    const spatialAudioNodes = audioNodes.filter(function(node) { 
+      return node.spatialAudio && node.audioElement; 
+    });
+    if (spatialAudioNodes.length > 0) {
+      console.log('🔊 Setting up spatial audio for ' + spatialAudioNodes.length + ' nodes');
+      setupSpatialAudioUpdate();
+    } else {
+      console.log('🔊 No spatial audio nodes to set up');
+    }
+
+    audioInitialized = true;
+    
+    // Update button
+    const initAudioBtn = document.getElementById('initAudioBtn');
+    if (initAudioBtn) {
+      initAudioBtn.disabled = true;
+      initAudioBtn.textContent = 'Audio Initialized';
+    }
+    
+    console.log('🔊 Audio system initialized successfully');
+  }
+
+  // Find Active Controller
+  function updateActiveController(sceneGraph) {
+    if (sceneGraph && sceneGraph.nodes) {
+      const activeControllerNode = sceneGraph.nodes.find(function(node) {
+        return node.inputControl && node.inputControl.active && node.inputControl.locomotionType !== 'none';
+      });
+      
+      if (activeControllerNode) {
+        const controllerObject = scene.getNodeById(activeControllerNode.id);
+        if (controllerObject) {
+          activeController = controllerObject;
+          console.log('🎮 Active controller found: ' + activeControllerNode.name);
+        }
+      }
+    }
+  }
+
+  // Spatial Audio Update Loop
+  function setupSpatialAudioUpdate() {
+    console.log('🔊 Setting up spatial audio update loop');
+    
+    let debugCounter = 0;
+    
+    // Update spatial audio volumes based on distance to active controller
+    scene.registerBeforeRender(function() {
+      if (!activeController) {
+        return;
+      }
+
+      const controllerPosition = activeController.position;
+      
+      for (const audioNode of audioNodes) {
+        if (!audioNode.spatialAudio || !audioNode.audioElement || !audioNode.enabled) {
+          continue;
+        }
+
+        const audioPosition = audioNode.transform.position;
+        const distance = BABYLON.Vector3.Distance(controllerPosition, audioPosition);
+        
+        // Calculate volume based on distance and radius (matching reference implementation)
+        const normalizedDistance = distance / audioNode.radius;
+        const volume = Math.max(0, audioNode.volume - normalizedDistance);
+        
+        audioNode.audioElement.volume = volume;
+        
+        // Debug every 60 frames (roughly once per second at 60fps)
+        if (debugCounter % 60 === 0) {
+          const isPlaying = !audioNode.audioElement.paused;
+          const currentVolume = audioNode.audioElement.volume;
+          console.log('🔊 [' + audioNode.name + '] Distance: ' + distance.toFixed(2) + ', Radius: ' + audioNode.radius + ', MaxVol: ' + audioNode.volume + ', CalcVol: ' + volume.toFixed(3) + ', ActualVol: ' + currentVolume.toFixed(3) + ', Playing: ' + isPlaying);
+        }
+      }
+      
+      debugCounter++;
+    });
   }
 
   // Instantiate scene graph (adapted from viewer.js)
@@ -296,6 +516,9 @@
         
         if (childObj && parentObj) {
           console.log('🔗 Applying parent relationship: ' + node.id + ' → ' + node.parentId);
+          if (node.kind === 'camera') {
+            console.log('📷 Camera parenting enabled: ' + (node.name || node.id) + ' → ' + (parentObj.name || node.parentId));
+          }
           console.log('📍 Child transform from scene graph:', node.transform);
           
           // Apply Babylon.js parent relationship
@@ -384,6 +607,11 @@
             if (cameraProps.upperRadiusLimit !== undefined) {
               camera.upperRadiusLimit = cameraProps.upperRadiusLimit;
             }
+            
+            // Set zoom sensitivity with dynamic behavior (wheelDeltaPercentage)
+            const wheelDelta = cameraProps.wheelDeltaPercentage !== undefined ? cameraProps.wheelDeltaPercentage : 0.01;
+            setupUserCameraDynamicZoom(camera, wheelDelta);
+            console.log('🎯 Set camera zoom sensitivity with dynamic behavior:', node.name, 'to:', wheelDelta);
           }
           
           // Set common camera properties (use exact values from editor)
@@ -632,6 +860,38 @@
         case 'particle':
           console.log('🌟 Creating particle system: ' + node.name);
           await createParticleSystem(node, scene);
+          break;
+
+        case 'audio':
+          console.log('🔊 Creating audio node: ' + node.name);
+          const audioProps = node.audio || {};
+          
+          // Create a transform node to represent the audio position
+          const audioTransform = new BABYLON.TransformNode(node.id, scene);
+          audioTransform.position = position;
+          audioTransform.rotation = rotation;
+          audioTransform.scaling = scaling;
+          
+          // Apply visibility and enabled states
+          const visible = node.visible !== false;
+          const enabled = node.enabled !== false;
+          audioTransform.setEnabled(enabled && visible);
+          
+          // Store audio data for later initialization (browser requires user interaction)
+          audioNodes.push({
+            id: node.id,
+            name: node.name,
+            transform: audioTransform,
+            audioFile: audioProps.audioFile,
+            volume: audioProps.volume !== undefined ? audioProps.volume : 1.0,
+            loop: audioProps.loop !== undefined ? audioProps.loop : false,
+            spatialAudio: audioProps.spatialAudio !== undefined ? audioProps.spatialAudio : false,
+            radius: audioProps.radius !== undefined ? audioProps.radius : 10,
+            enabled: enabled && visible,
+            audioElement: null // Will be created on initialization
+          });
+          
+          console.log('✅ Created audio node: ' + node.id + ' (' + (audioProps.audioFile || 'no file') + ')');
           break;
       }
     } catch (error) {
@@ -1274,13 +1534,26 @@
                   }
                   
                   material[property] = tex;
+                  
+                  // Handle lightmap-specific properties
+                  if (property === 'lightmapTexture') {
+                    material.useLightmapAsShadowmap = true;
+                    console.log('🔧 RUNTIME: Enabled useLightmapAsShadowmap for lightmap texture');
+                  }
+                  
                   console.log('✅ RUNTIME: Applied texture to material:', materialName + '.' + property, 'with UV channel:', tex.coordinatesIndex);
                 } else {
                   console.warn('❌ RUNTIME: Skipping texture override due to load failure:', property, value);
                 }
               } else {
+                // Handle non-texture properties
                 material[property] = value;
                 console.log('✅ RUNTIME: Applied non-texture property:', materialName + '.' + property + ' = ' + value);
+                
+                // Special handling for lightmap shadow mapping
+                if (property === 'useLightmapAsShadowmap') {
+                  console.log('🔧 RUNTIME: Applied useLightmapAsShadowmap:', value);
+                }
               }
             
             // Handle wireframe for materials that aren't ready yet (common with imported assets)
@@ -1340,9 +1613,9 @@
         babylonObject.physicsImpostor = null;
       }
       
-      // Check if this should be a raw Ammo collider (for complex imported meshes marked as colliders)
-      if (physicsProps.isCollider && isImportedMesh(babylonObject)) {
-        console.log('🔷 Creating raw Ammo collider for imported mesh:', babylonObject.name);
+      // Check if this should be a raw Ammo collider (meshCollider type or legacy isCollider flag)
+      if (physicsProps.impostor === 'meshCollider' || (physicsProps.isCollider && isImportedMesh(babylonObject))) {
+        console.log('🔷 Creating raw Ammo collider for mesh:', babylonObject.name);
         createRawAmmoCollider(babylonObject, physicsProps);
         return;
       }
@@ -1475,6 +1748,53 @@
     }
   }
 
+  // Setup dynamic zoom sensitivity for user cameras (similar to editor camera)
+  function setupUserCameraDynamicZoom(camera, baseSensitivity) {
+    if (!camera) return;
+
+    // Clear any existing observers to avoid duplicates
+    if (camera._dynamicZoomObserver) {
+      camera.onAfterCheckInputsObservable.remove(camera._dynamicZoomObserver);
+    }
+
+    // Add observer to dynamically adjust zoom sensitivity based on distance
+    const observer = camera.onAfterCheckInputsObservable.add(function() {
+      if (camera.mode === BABYLON.Camera.ORTHOGRAPHIC_CAMERA) return;
+
+      const currentRadius = camera.radius;
+      
+      // Dynamic sensitivity based on distance (same algorithm as editor camera)
+      const closeDistance = 2.0;      // Distance considered "close" where zoom slows down most
+      const normalDistance = 20.0;    // Distance where zoom becomes normal
+      const minMultiplier = 0.8;      // 80% of base when very close
+      const maxMultiplier = 2.0;      // 200% of base when far
+      
+      // Calculate zoom sensitivity using smooth curve
+      let multiplier;
+      
+      if (currentRadius <= closeDistance) {
+        // Very close: use minimum multiplier
+        multiplier = minMultiplier;
+      } else if (currentRadius >= normalDistance) {
+        // Far away: use maximum multiplier
+        multiplier = maxMultiplier;
+      } else {
+        // Interpolate smoothly between close and normal distance
+        const t = (currentRadius - closeDistance) / (normalDistance - closeDistance);
+        // Use smooth step function for gradual transition
+        const smoothT = t * t * (3.0 - 2.0 * t);
+        multiplier = minMultiplier + (maxMultiplier - minMultiplier) * smoothT;
+      }
+      
+      // Apply the dynamic sensitivity based on user's base setting
+      camera.wheelDeltaPercentage = baseSensitivity * multiplier;
+    });
+
+    // Store observer reference for cleanup
+    camera._dynamicZoomObserver = observer;
+    camera._baseSensitivity = baseSensitivity;
+  }
+
   // Input Control System (from viewer.js)
   function createInputControlManager(scene, sceneGraph) {
     return {
@@ -1561,10 +1881,19 @@
             isMoving: false
           });
           
-          // Initialize control rotation for physics objects
+          // Initialize control rotation for physics objects - preserve Y rotation from editor
           if (babylonObject.physicsImpostor) {
-            babylonObject._controlRotation = 0;
-            console.log('🎯 Initialized control rotation for physics object:', node.name);
+            // Preserve the Y rotation that was set in the editor
+            const initialYRotation = node.transform?.rotation?.[1] || 0;
+            babylonObject._controlRotation = initialYRotation;
+            
+            // Apply the initial rotation to child meshes so they visually face the correct direction
+            if (initialYRotation !== 0) {
+              rotateChildNodes(babylonObject, initialYRotation);
+              console.log('🎯 Applied initial rotation of', initialYRotation.toFixed(3), 'rad (' + (initialYRotation * 180 / Math.PI).toFixed(1) + '°) to child meshes of', node.name);
+            }
+            
+            console.log('🎯 Initialized control rotation for physics object:', node.name, 'preserving Y rotation:', initialYRotation.toFixed(3), 'rad', '(' + (initialYRotation * 180 / Math.PI).toFixed(1) + '°)');
           }
           
           foundCount++;
@@ -2037,6 +2366,366 @@
     };
     
     console.log('📹 CameraTrackingManager initialized');
+    return manager;
+  }
+
+  // Ultra-Performant Camera Collision System - Smart, Predictive, Minimal  
+  function createCameraCollisionManager(scene, sceneGraph) {
+    const manager = {
+      scene: scene,
+      sceneGraph: sceneGraph,
+      collisionCameras: new Map(),
+      solidMeshes: [], // Pre-filtered collision meshes
+      lastUpdateFrame: 0,
+      
+      initialize: function() {
+        this.buildCollisionMeshCache();
+        this.scanForCollisionCameras();
+        this.setupSmartUpdateLoop();
+      },
+
+      // SMART: Pre-filter and cache only solid meshes once
+      buildCollisionMeshCache: function() {
+        this.solidMeshes = this.scene.meshes.filter(function(mesh) {
+          return mesh?.isPickable === true && 
+                 mesh?.metadata?.solid !== false && 
+                 mesh.isEnabled() &&
+                 mesh.visibility > 0.5 &&
+                 mesh.getBoundingInfo()?.boundingBox.vectorsWorld?.length > 0;
+        });
+        console.log('📹 Cached ' + this.solidMeshes.length + ' collision meshes');
+      },
+      
+      scanForCollisionCameras: function() {
+        if (!this.sceneGraph || !this.sceneGraph.nodes) return;
+
+        let foundCount = 0;
+        this.collisionCameras.clear();
+
+        for (const node of this.sceneGraph.nodes) {
+          if (node.kind === 'camera' && node.camera?.collision?.enabled) {
+            const babylonCamera = this.scene.getCameraById(node.id);
+            
+            if (babylonCamera) {
+              // Store both current and desired radius for ArcRotate cameras
+              const isArcRotate = babylonCamera instanceof BABYLON.ArcRotateCamera;
+              
+              this.collisionCameras.set(node.id, {
+                camera: babylonCamera,
+                settings: node.camera.collision,
+                targetNodeId: node.camera.targetObject || null,
+                // Smart state tracking
+                desiredRadius: isArcRotate ? babylonCamera.radius : null,
+                currentRadius: isArcRotate ? babylonCamera.radius : null,
+                // Velocity-based prediction
+                velocity: new BABYLON.Vector3(0, 0, 0),
+                lastPosition: babylonCamera.position.clone(),
+                lastTargetPosition: isArcRotate ? babylonCamera.target.clone() : null,
+                // Smart collision state
+                isColliding: false,
+                collisionResult: null,
+                lastCheckFrame: 0,
+                // Adaptive frequency
+                staticFrames: 0,
+                updateInterval: 5
+              });
+              
+              // Listen for user zoom changes to update desired radius
+              if (isArcRotate) {
+                this.setupRadiusTracking(babylonCamera, node.id);
+              }
+              
+              foundCount++;
+              console.log('📹 Found camera with collision: ' + node.name);
+            }
+          }
+        }
+
+        console.log('📹 Found ' + foundCount + ' cameras with collision enabled');
+      },
+
+      setupRadiusTracking: function(camera, cameraId) {
+        // Track when user manually changes radius (zoom)
+        let lastRadius = camera.radius;
+        const cameraData = this.collisionCameras.get(cameraId);
+        const self = this;
+        
+        // Check for user-initiated radius changes
+        const checkRadiusChange = function() {
+          if (Math.abs(camera.radius - lastRadius) > 0.1 && !cameraData.isColliding) {
+            cameraData.desiredRadius = camera.radius;
+            cameraData.staticFrames = 0; // Reset static counter
+          }
+          lastRadius = camera.radius;
+        };
+        
+        // Listen for wheel events (zoom)
+        camera.onProjectionMatrixChangedObservable.add(checkRadiusChange);
+      },
+      
+      getTargetPoint: function(camera, targetNodeId) {
+        if (camera instanceof BABYLON.ArcRotateCamera) {
+          return camera.target;
+        } else if (targetNodeId) {
+          const targetObject = this.scene.getNodeById(targetNodeId);
+          if (targetObject) {
+            return targetObject.getAbsolutePosition();
+          }
+        }
+        
+        // Fallback: look ahead from camera position
+        return camera.position.add(camera.getDirection(BABYLON.Vector3.Forward()).scale(5));
+      },
+
+      // SMART: Only check cameras that actually need it
+      needsUpdate: function(cameraData, frameCounter) {
+        const camera = cameraData.camera;
+        const lastPosition = cameraData.lastPosition;
+        const updateInterval = cameraData.updateInterval;
+        const staticFrames = cameraData.staticFrames;
+        
+        // Skip if not time yet (adaptive frequency)
+        if (frameCounter - cameraData.lastCheckFrame < updateInterval) return false;
+        
+        // Calculate velocity for prediction
+        const currentPos = camera.position;
+        const movement = currentPos.subtract(lastPosition);
+        const velocity = movement.length();
+        
+        // Update velocity vector for prediction
+        if (velocity > 0.01) {
+          cameraData.velocity = movement.normalize();
+          cameraData.staticFrames = 0;
+        } else {
+          cameraData.staticFrames++;
+        }
+        
+        // Adaptive frequency: slower checks when static
+        if (cameraData.staticFrames > 30) {
+          cameraData.updateInterval = 15; // Very slow for static cameras
+          if (cameraData.staticFrames > 120) return false; // Stop checking completely
+        } else if (velocity > 0.5) {
+          cameraData.updateInterval = 2; // Fast checks for moving cameras
+        } else {
+          cameraData.updateInterval = 5; // Normal rate
+        }
+        
+        // Must check if significant movement or collision state change
+        return velocity > 0.05 || cameraData.isColliding;
+      },
+
+      // SMART: Fast distance pre-check before expensive ray casting
+      fastProximityCheck: function(cameraData) {
+        const camera = cameraData.camera;
+        const settings = cameraData.settings;
+        const distance = settings.distance || 10;
+        
+        const cameraPos = camera.position;
+        const maxCheckDistance = distance + 2; // Add buffer
+        
+        // Quick check: is camera near any solid mesh?
+        for (let i = 0; i < this.solidMeshes.length; i++) {
+          const mesh = this.solidMeshes[i];
+          const meshPos = mesh.getBoundingInfo().boundingBox.centerWorld;
+          const meshSize = mesh.getBoundingInfo().boundingBox.maximumWorld.subtract(
+            mesh.getBoundingInfo().boundingBox.minimumWorld
+          ).length();
+          
+          const distanceToMesh = cameraPos.subtract(meshPos).length();
+          
+          // If camera is close enough to any mesh, collision is possible
+          if (distanceToMesh < maxCheckDistance + meshSize * 0.5) {
+            return true;
+          }
+        }
+        
+        return false; // No meshes nearby, skip expensive ray cast
+      },
+
+      // SMART: Predictive collision using velocity  
+      predictiveCollisionCheck: function(cameraData) {
+        const camera = cameraData.camera;
+        const settings = cameraData.settings;
+        const targetNodeId = cameraData.targetNodeId;
+        const distance = settings.distance || 10;
+        const cushion = settings.cushion || 0.2;
+
+        // Get the target point
+        const targetPoint = this.getTargetPoint(camera, targetNodeId);
+        
+        // For ArcRotate cameras, use desired radius for collision check
+        let checkRadius = distance;
+        if (camera instanceof BABYLON.ArcRotateCamera) {
+          checkRadius = Math.min(cameraData.desiredRadius, distance);
+        }
+        
+        // Calculate desired camera position
+        let desiredPosition;
+        
+        if (camera instanceof BABYLON.ArcRotateCamera) {
+          const alpha = camera.alpha;
+          const beta = camera.beta;
+          
+          desiredPosition = new BABYLON.Vector3(
+            targetPoint.x + checkRadius * Math.sin(beta) * Math.cos(alpha),
+            targetPoint.y + checkRadius * Math.cos(beta),
+            targetPoint.z + checkRadius * Math.sin(beta) * Math.sin(alpha)
+          );
+        } else {
+          const direction = camera.position.subtract(targetPoint);
+          const currentDistance = direction.length();
+          
+          if (currentDistance > distance) {
+            direction.normalize();
+            desiredPosition = targetPoint.add(direction.scale(distance));
+          } else {
+            desiredPosition = camera.position.clone();
+          }
+        }
+
+        // Cast ray from target to desired position
+        const rayDirection = desiredPosition.subtract(targetPoint);
+        const rayLength = rayDirection.length();
+        
+        // Skip if ray is too short
+        if (rayLength < 0.1) return false;
+        
+        rayDirection.normalize();
+        const ray = new BABYLON.Ray(targetPoint, rayDirection);
+        
+        // Use cached mesh list instead of scene.pickWithRay for performance
+        let closestHit = null;
+        let closestDistance = rayLength;
+        
+        // Check only meshes that could be in the ray path (smart filtering)
+        for (let i = 0; i < this.solidMeshes.length; i++) {
+          const mesh = this.solidMeshes[i];
+          
+          // Quick bounding sphere check first
+          const meshCenter = mesh.getBoundingInfo().boundingSphere.centerWorld;
+          const meshRadius = mesh.getBoundingInfo().boundingSphere.radiusWorld;
+          
+          // Vector from target to mesh center
+          const toMeshCenter = meshCenter.subtract(targetPoint);
+          const distanceAlongRay = BABYLON.Vector3.Dot(toMeshCenter, rayDirection);
+          
+          // Skip if mesh is behind ray or too far
+          if (distanceAlongRay < 0 || distanceAlongRay > closestDistance + meshRadius) continue;
+          
+          // Distance from ray to mesh center
+          const rayToMeshCenter = toMeshCenter.subtract(rayDirection.scale(distanceAlongRay));
+          const distanceFromRay = rayToMeshCenter.length();
+          
+          // Skip if ray misses mesh bounding sphere
+          if (distanceFromRay > meshRadius) continue;
+          
+          // Only now do expensive ray-mesh intersection
+          const ray = new BABYLON.Ray(targetPoint, rayDirection);
+          const hit = ray.intersectsMesh(mesh);
+          
+          if (hit.hit && hit.distance > 0 && hit.distance < closestDistance) {
+            closestHit = hit;
+            closestDistance = hit.distance;
+          }
+        }
+        
+        const hit = closestHit;
+        
+        if (hit && hit.distance > 0 && hit.distance < rayLength) {
+          // Collision detected
+          const collisionDistance = Math.max(0.1, hit.distance - cushion);
+          
+          if (camera instanceof BABYLON.ArcRotateCamera) {
+            // Smooth transition with less computation
+            const targetRadius = collisionDistance;
+            camera.radius += (targetRadius - camera.radius) * 0.2;
+            cameraData.currentRadius = camera.radius;
+            cameraData.isColliding = true;
+          } else {
+            // For Universal cameras
+            const finalPosition = targetPoint.add(rayDirection.scale(collisionDistance));
+            camera.position.addInPlace(finalPosition.subtract(camera.position).scale(0.1));
+            cameraData.isColliding = true;
+          }
+          
+          cameraData.collisionResult = { distance: collisionDistance, point: hit.pickedPoint };
+          return true;
+        } else {
+          // Smart restoration: only if we were colliding
+          if (cameraData.isColliding && camera instanceof BABYLON.ArcRotateCamera) {
+            const radiusDiff = cameraData.desiredRadius - camera.radius;
+            if (Math.abs(radiusDiff) > 0.05) {
+              camera.radius += radiusDiff * 0.1;
+              cameraData.currentRadius = camera.radius;
+            } else {
+              camera.radius = cameraData.desiredRadius;
+              cameraData.currentRadius = camera.radius;
+              cameraData.isColliding = false;
+              cameraData.collisionResult = null;
+            }
+          } else {
+            cameraData.isColliding = false;
+            cameraData.collisionResult = null;
+          }
+          
+          return false;
+        }
+      },
+      
+      updateCamera: function(cameraData, frameCounter) {
+        // Smart early exit: skip if no update needed
+        if (!this.needsUpdate(cameraData, frameCounter)) return;
+        
+        // Ultra-fast proximity check: skip expensive operations if no meshes nearby
+        if (!this.fastProximityCheck(cameraData)) {
+          // No meshes nearby, ensure we're not colliding and exit fast
+          if (cameraData.isColliding) {
+            cameraData.isColliding = false;
+            cameraData.collisionResult = null;
+          }
+          cameraData.lastCheckFrame = frameCounter;
+          return;
+        }
+        
+        // Predictive collision check (only when needed)
+        this.predictiveCollisionCheck(cameraData);
+        
+        // Update tracking data efficiently
+        cameraData.lastPosition.copyFrom(cameraData.camera.position);
+        if (cameraData.camera instanceof BABYLON.ArcRotateCamera && cameraData.lastTargetPosition) {
+          cameraData.lastTargetPosition.copyFrom(cameraData.camera.target);
+        }
+        cameraData.lastCheckFrame = frameCounter;
+      },
+      
+      smartUpdate: function() {
+        this.lastUpdateFrame++;
+        
+        // Smart: only process cameras that might need updates
+        for (const cameraId of this.collisionCameras.keys()) {
+          const cameraData = this.collisionCameras.get(cameraId);
+          this.updateCamera(cameraData, this.lastUpdateFrame);
+        }
+      },
+      
+      setupSmartUpdateLoop: function() {
+        if (this.scene && this.collisionCameras.size > 0) {
+          const self = this;
+          this.scene.onBeforeRenderObservable.add(function() {
+            self.smartUpdate();
+          });
+          console.log('📹 Smart collision loop started - adaptive & predictive');
+        }
+      },
+      
+      dispose: function() {
+        this.collisionCameras.clear();
+        this.solidMeshes = [];
+        console.log('📹 Smart CameraCollisionManager disposed');
+      }
+    };
+    
+    console.log('📹 CameraCollisionManager initialized');
     return manager;
   }
 
