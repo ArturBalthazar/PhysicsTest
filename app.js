@@ -223,8 +223,8 @@
       console.log('📹 Camera collision system initialized');
       
       // Initialize FPS counter and audio system
-      setupFpsCounter(engine);
-      setupAudioSystem(sceneGraph);
+      setupFpsCounter(engine, scene);
+      setupAudioSystem(sceneGraph, scene);
     }
 
     // Apply material overrides after controls are initialized
@@ -294,7 +294,7 @@
   }
 
   // FPS Counter Setup
-  function setupFpsCounter(engine) {
+  function setupFpsCounter(engine, scene) {
     fpsCounter = document.getElementById('fpsDisplay');
     if (!fpsCounter) {
       console.warn('FPS display element not found');
@@ -328,11 +328,11 @@
   }
 
   // Audio System Setup
-  function setupAudioSystem(sceneGraph) {
+  function setupAudioSystem(sceneGraph, scene) {
     const initAudioBtn = document.getElementById('initAudioBtn');
     if (initAudioBtn) {
       initAudioBtn.addEventListener('click', function() {
-        initializeAudio(sceneGraph);
+        initializeAudio(sceneGraph, scene);
       });
       
       // Update button state based on audio nodes
@@ -347,7 +347,7 @@
   }
 
   // Initialize Audio System
-  function initializeAudio(sceneGraph) {
+  function initializeAudio(sceneGraph, scene) {
     if (audioInitialized) {
       console.log('🔊 Audio already initialized');
       return;
@@ -356,7 +356,7 @@
     console.log('🔊 Initializing ' + audioNodes.length + ' audio nodes...');
     
     // Find active controller for spatial audio
-    updateActiveController(sceneGraph);
+    updateActiveController(sceneGraph, scene);
     
     for (const audioNode of audioNodes) {
       if (!audioNode.audioFile || !audioNode.enabled) {
@@ -403,7 +403,7 @@
     });
     if (spatialAudioNodes.length > 0) {
       console.log('🔊 Setting up spatial audio for ' + spatialAudioNodes.length + ' nodes');
-      setupSpatialAudioUpdate();
+      setupSpatialAudioUpdate(scene);
     } else {
       console.log('🔊 No spatial audio nodes to set up');
     }
@@ -421,7 +421,7 @@
   }
 
   // Find Active Controller
-  function updateActiveController(sceneGraph) {
+  function updateActiveController(sceneGraph, scene) {
     if (sceneGraph && sceneGraph.nodes) {
       const activeControllerNode = sceneGraph.nodes.find(function(node) {
         return node.inputControl && node.inputControl.active && node.inputControl.locomotionType !== 'none';
@@ -438,7 +438,7 @@
   }
 
   // Spatial Audio Update Loop
-  function setupSpatialAudioUpdate() {
+  function setupSpatialAudioUpdate(scene) {
     console.log('🔊 Setting up spatial audio update loop');
     
     let debugCounter = 0;
