@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneVersion": 2622,
+  "sceneVersion": 303,
   "sceneSettings": {
     "environment": {
       "clearColor": [
@@ -84,33 +84,16 @@
         "minZ": 0.1,
         "maxZ": 100,
         "fov": 0.7853981633974483,
-        "alpha": -5.374639345809274,
-        "beta": 1.3804754775533103,
-        "radius": 5,
+        "alpha": -1.5707963267948966,
+        "beta": 1.2566370614359172,
+        "radius": 15,
         "target": [
-          0.11465144157409668,
-          37.47904968261719,
-          59.497947692871094
+          0,
+          0,
+          0
         ],
-        "targetMode": "object",
-        "targetObject": "d4327a08-28fe-4195-8869-09b5feefedf1",
-        "collision": {
-          "enabled": false,
-          "shoulderOffset": [
-            0.5,
-            1.6,
-            -3.5
-          ],
-          "minDistance": 0.5,
-          "maxDistance": 6,
-          "cushion": 0.2,
-          "extraRays": 4,
-          "posLerp": 0.15,
-          "rotLerp": 0.15,
-          "distance": 10
-        },
-        "upperRadiusLimit": 10,
-        "lowerRadiusLimit": 5
+        "targetMode": "position",
+        "targetObject": null
       }
     },
     {
@@ -132,7 +115,7 @@
       "enabled": true,
       "light": {
         "type": "Hemispheric",
-        "intensity": 2,
+        "intensity": 0.7,
         "color": [
           1,
           1,
@@ -147,395 +130,52 @@
       }
     },
     {
-      "id": "root::avatar",
-      "kind": "model",
-      "name": "avatar",
-      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/avatar.glb",
-      "transform": {
-        "position": [
-          0.1653428077697754,
-          -0.9818030595779419,
-          -0.3033473491668701
-        ],
-        "rotation": [
-          0,
-          -7.502261212266599e-8,
-          0
-        ],
-        "scaling": [
-          7.0000000000000195,
-          1,
-          7.0000000000000195
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "assetId": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/avatar.glb",
-        "file": "avatar.glb",
-        "importedAsset": true
-      },
-      "parentId": "d4327a08-28fe-4195-8869-09b5feefedf1"
-    },
-    {
-      "id": "d4327a08-28fe-4195-8869-09b5feefedf1",
+      "id": "defaultCube",
       "kind": "mesh",
-      "name": "User_Mesh",
+      "name": "Cube",
       "transform": {
         "position": [
-          0.11465144157409668,
-          37.47904968261719,
-          59.497947692871094
-        ],
-        "rotation": [
-          0,
-          -2.5132741228718345,
-          0
+          5.139887809753418,
+          1,
+          2.7061550617218018
         ],
         "scaling": [
-          0.10000000149011612,
-          0.7,
-          0.10000000149011612
+          1,
+          1,
+          1
         ]
       },
       "visible": true,
-      "enabled": true,
-      "metadata": {
-        "primitiveType": "cone"
-      },
-      "physics": {
-        "enabled": true,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0,
-        "friction": 0,
-        "impostor": "sphere",
-        "isCollider": false,
-        "isTrigger": false
-      },
-      "inputControl": {
-        "locomotionType": "Grounded Avatar",
-        "speedBoostEnabled": true,
-        "blendTime": 0.5,
-        "speed": 0.03,
-        "speedBoostMultiplier": 2,
-        "speedBoostKey": {
-          "key": "ShiftLeft"
-        },
-        "idleAnimationId": "idle",
-        "idleAnimationName": "idle",
-        "forward": {
-          "keyBinding": {
-            "key": "KeyW"
-          },
-          "animationId": "walk",
-          "animationName": "walk",
-          "speedBoostAnimationId": "run",
-          "speedBoostAnimationName": "run"
-        },
-        "backward": {
-          "keyBinding": {
-            "key": "KeyS"
-          },
-          "animationId": "walk_backward",
-          "animationName": "walk_backward",
-          "speedBoostAnimationId": "run_backward",
-          "speedBoostAnimationName": "run_backward"
-        },
-        "turnLeft": {
-          "keyBinding": {
-            "key": "KeyD"
-          },
-          "animationId": "walk",
-          "animationName": "walk",
-          "speedBoostAnimationId": "run",
-          "speedBoostAnimationName": "run"
-        },
-        "turnRight": {
-          "keyBinding": {
-            "key": "KeyA"
-          },
-          "animationId": "walk",
-          "animationName": "walk",
-          "speedBoostAnimationId": "run",
-          "speedBoostAnimationName": "run"
-        },
-        "jump": {
-          "keyBinding": {
-            "key": "Space"
-          },
-          "animationId": "jump",
-          "animationName": "jump",
-          "backwardAnimationId": "jump_backward",
-          "backwardAnimationName": "jump_backward"
-        },
-        "isActiveController": true,
-        "active": true
-      }
+      "enabled": true
     },
     {
-      "id": "root::warehouse::mesh::mk-collider-79fxk2",
+      "id": "ground",
       "kind": "mesh",
-      "name": "mk_collider",
+      "name": "Ground Plane",
       "transform": {
         "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
+          24.16706657409668,
           0,
           0
         ],
         "scaling": [
+          3,
           1,
-          1,
-          1
+          3
         ]
       },
       "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::warehouse",
-        "sourceMeshName": "mk_collider"
-      },
-      "physics": {
-        "enabled": true,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "meshCollider",
-        "isCollider": false,
-        "isTrigger": false
-      }
-    },
-    {
-      "id": "7f216f98-3514-41a8-a528-0f82edf89785",
-      "kind": "audio",
-      "name": "Audio",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "audio": {
-        "volume": 1,
-        "loop": true,
-        "spatialAudio": false,
-        "radius": 10,
-        "autoPlay": false,
-        "isPlaying": false,
-        "audioFile": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/industry-warehouse-large-factory-warehouse-sound-effect-167909183_nw_prev.m4a"
-      },
-      "metadata": {}
-    },
-    {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive0-16kqv7",
-      "kind": "mesh",
-      "name": "avaturn_look_0_primitive0",
-      "parentId": "root::avatar",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::avatar",
-        "sourceMeshName": "avaturn_look_0_primitive0"
-      }
-    },
-    {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive1-7nwegr",
-      "kind": "mesh",
-      "name": "avaturn_look_0_primitive1",
-      "parentId": "root::avatar",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::avatar",
-        "sourceMeshName": "avaturn_look_0_primitive1"
-      }
-    },
-    {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive2-2ty9nq",
-      "kind": "mesh",
-      "name": "avaturn_look_0_primitive2",
-      "parentId": "root::avatar",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::avatar",
-        "sourceMeshName": "avaturn_look_0_primitive2"
-      }
-    },
-    {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive3-5ucyhx",
-      "kind": "mesh",
-      "name": "avaturn_look_0_primitive3",
-      "parentId": "root::avatar",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::avatar",
-        "sourceMeshName": "avaturn_look_0_primitive3"
-      }
-    },
-    {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive4-y3ez40",
-      "kind": "mesh",
-      "name": "avaturn_look_0_primitive4",
-      "parentId": "root::avatar",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::avatar",
-        "sourceMeshName": "avaturn_look_0_primitive4"
-      }
-    },
-    {
-      "id": "2b6d1e75-00e0-400b-9bc1-b4c1da2e4f38",
-      "kind": "audio",
-      "name": "Audio_05",
-      "transform": {
-        "position": [
-          3.128896951675415,
-          0.753027081489563,
-          0.7670068740844727
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "audio": {
-        "volume": 1,
-        "loop": true,
-        "spatialAudio": true,
-        "radius": 4,
-        "audioFile": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/calm-elevator-music-music-157584855_nw_prev.m4a"
-      }
+      "enabled": true
     },
     {
       "id": "root::samsungbeach-water-v6",
       "kind": "model",
       "name": "SamsungBeach_Water_v6",
-      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/SamsungBeach_Water_v6.glb",
+      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/SamsungBeach_Water_v6.glb",
       "transform": {
         "position": [
-          0,
-          0,
+          11.911542892456055,
+          -0.7116209864616394,
           0
         ],
         "rotation": [
@@ -552,13 +192,13 @@
       "visible": true,
       "enabled": true,
       "metadata": {
-        "assetId": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/SamsungBeach_Water_v6.glb",
+        "assetId": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/SamsungBeach_Water_v6.glb",
         "file": "SamsungBeach_Water_v6.glb",
         "importedAsset": true
       }
     },
     {
-      "id": "root::samsungbeach-water-v6::mesh::mk-water-phe6mv",
+      "id": "root::samsungbeach-water-v6::mesh::mk-water-fsh0kj",
       "kind": "mesh",
       "name": "mk_water",
       "parentId": "root::samsungbeach-water-v6",
@@ -596,305 +236,325 @@
         "isCollider": false,
         "isTrigger": false
       }
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive0-c8m4v2",
+      "kind": "mesh",
+      "name": "avaturn_look_0_primitive0",
+      "parentId": "root::avatar",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::avatar",
+        "sourceMeshName": "avaturn_look_0_primitive0"
+      }
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive1-bhagjp",
+      "kind": "mesh",
+      "name": "avaturn_look_0_primitive1",
+      "parentId": "root::avatar",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::avatar",
+        "sourceMeshName": "avaturn_look_0_primitive1"
+      }
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive2-w34h96",
+      "kind": "mesh",
+      "name": "avaturn_look_0_primitive2",
+      "parentId": "root::avatar",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::avatar",
+        "sourceMeshName": "avaturn_look_0_primitive2"
+      }
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive3-65x4ws",
+      "kind": "mesh",
+      "name": "avaturn_look_0_primitive3",
+      "parentId": "root::avatar",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::avatar",
+        "sourceMeshName": "avaturn_look_0_primitive3"
+      }
+    },
+    {
+      "id": "root::avatar::mesh::avaturn-look-0-primitive4-2n3wzu",
+      "kind": "mesh",
+      "name": "avaturn_look_0_primitive4",
+      "parentId": "root::avatar",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "importedAsset": true,
+        "sourceModelId": "root::avatar",
+        "sourceMeshName": "avaturn_look_0_primitive4"
+      }
+    },
+    {
+      "id": "4083ee69-ae09-4911-ba62-e963f2819c14",
+      "kind": "audio",
+      "name": "Audio",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "audio": {
+        "volume": 1,
+        "loop": true,
+        "spatialAudio": true,
+        "radius": 10,
+        "audioFile": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/calm-elevator-music-music-157584855_nw_prev.m4a"
+      }
+    },
+    {
+      "id": "root::avatar",
+      "kind": "model",
+      "name": "avatar",
+      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/avatar.glb",
+      "transform": {
+        "position": [
+          0,
+          -1.0178053379058838,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          2,
+          1,
+          2
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "assetId": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/avatar.glb",
+        "file": "avatar.glb",
+        "importedAsset": true
+      },
+      "parentId": "c2f125cf-958e-497b-944d-6f10b710ea49"
+    },
+    {
+      "id": "b061ac7d-5b0e-4a69-999b-5f8c4cb68285",
+      "kind": "audio",
+      "name": "Audio_02",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "audio": {
+        "volume": 1,
+        "loop": true,
+        "spatialAudio": false,
+        "radius": 10,
+        "audioFile": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/industry-warehouse-large-factory-warehouse-sound-effect-167909183_nw_prev.m4a"
+      }
+    },
+    {
+      "id": "c2f125cf-958e-497b-944d-6f10b710ea49",
+      "kind": "mesh",
+      "name": "Cone",
+      "transform": {
+        "position": [
+          0,
+          3.559769630432129,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          0.5,
+          1,
+          0.5
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "primitiveType": "cone",
+        "materialName": "Material"
+      },
+      "physics": {
+        "enabled": true,
+        "type": "dynamic",
+        "mass": 1,
+        "restitution": 0.3,
+        "friction": 0.5,
+        "impostor": "capsule",
+        "isCollider": false,
+        "isTrigger": false
+      },
+      "inputControl": {
+        "locomotionType": "Grounded Avatar",
+        "active": true,
+        "idleAnimationId": "idle",
+        "idleAnimationName": "idle",
+        "forward": {
+          "keyBinding": {
+            "key": "KeyW"
+          },
+          "animationId": "walk",
+          "animationName": "walk"
+        },
+        "turnLeft": {
+          "keyBinding": {
+            "key": "KeyD"
+          },
+          "animationId": "walk",
+          "animationName": "walk"
+        },
+        "turnRight": {
+          "keyBinding": {
+            "key": "KeyA"
+          },
+          "animationId": "walk",
+          "animationName": "walk"
+        },
+        "backward": {
+          "keyBinding": {},
+          "animationId": "walk_backward",
+          "animationName": "walk_backward"
+        },
+        "jump": {
+          "keyBinding": {
+            "key": "Space"
+          }
+        }
+      }
     }
   ],
-  "materialOverrides": {
-    "Metal_Aluminium_Sandblasted": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_BaseColor_Darker.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_Metallic-Sandblaster_Aluminium_Roughness.png"
-    },
-    "mk_Spot_Lights": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/21-1.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/21-21.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/21.png"
-    },
-    "mk_Air_Vent": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_BaseColor_Darker.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_Metallic-Sandblaster_Aluminium_Roughness.png"
-    },
-    "mk_Air_Vent_Mesh": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_BaseColor_Darker.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Sandblaster_Aluminium_Metallic-Sandblaster_Aluminium_Roughness.png"
-    },
-    "mk_Spiderwebs.001": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/lambert4SG_baseColor.png"
-    },
-    "Temp controller": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Interface%20de%20Temperatura%20e%20Umidade.png",
-      "emissiveTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Interface%20de%20Temperatura%20e%20Umidade.png"
-    },
-    "Syringe_Aggregated": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Syringe_Aggregated_Material_diffuse-Syringe_Aggregated_Material_alpha.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Syringe_Aggregated_Material_metalness-Syringe_Aggregated_Material_roughness.png"
-    },
-    "mk_Stairs": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/22-1.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/22-22.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/22.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Stairs_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "ColorAtlas_mk_AC_Tables": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/AtlasColorTexture.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/AtlasGrayTexture.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_AC_Tables_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Metal_Roofing_Grey": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Corrugated_Metal_Roofing_Product_BaseColor.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Corrugated_Metal_Roofing_Product_Roughness.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Corrugated_Metal_Roofing_Product_Normal.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Metal_Roofing_Grey_lightmap.png",
-      "useLightmapAsShadowmap": true,
-      "backFaceCulling": true
-    },
-    "mk_Resin_Epoxy_Yellow": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/1Color.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Resin_Epoxy_Logo_Roughness_3.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Floor_Yellow_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Doors": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/05_%20gerbang_Aggregated_Material-1.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/05_%20gerbang_Aggregated_Material-05_%20gerbang_Aggregated_Material.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/05_%20gerbang_Aggregated_Material.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Doors_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_AC_Tables_02": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/28-1.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/28-28.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/28.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_AC_Tables_02_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Paper_Box_Big": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/vgyidauaw_1K_Basecolor.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/vgyidauaw_1K_Roughness.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/vgyidauaw_1K_Normal.jpg",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Paper_Box_Big_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Wood_Bamboo": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/wood_bamboo_baseColor.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/wood_bamboo_metallic-wood_bamboo_roughness.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/wood_bamboo_Bamboo_Wood_normal.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Wood_Bamboo_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Banana": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/banana.jpg",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Banana_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Shelf_01": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_01_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Shelf_02": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_02_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Shelf_03": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_03_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Shelf_04": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_04_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Shelf_05": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_05_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Shelf_06": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_06_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Shelf_07": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_07_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Paper_Boxes_01": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_01_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Paper_Boxes_02": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_02_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Paper_Boxes_03": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_03_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Paper_Boxes_04": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_04_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Paper_Boxes_05": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_05_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Paper_Boxes_06": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_06_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Paper_Boxes_07": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_shelves_boxes_07_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Shelves_pilars": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_4.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_5.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Shelves_pilars_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Fishes": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0-1.jpg",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Fishes_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Paper_Boxes": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Paper_Boxes_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Forklift": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/toyota_forklift_3t_low_Material_BaseColor.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/toyota_forklift_3t_low_Material_Metallic-toyota_forklift_3t_low_Material_Roughness.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/toyota_forklift_3t_low_Material_Normal.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Forklift_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Resin_Epoxy": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/1Color.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Resin_Epoxy_Logo_Roughness_3.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_Floor_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_petFood.001_Remeshed_Aggregated_Material.001": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_petFood_001_Remeshed_Aggregated_Material-1.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_petFood_001_Remeshed_Aggregated_Material-mk_petFood_001_Remeshed_Aggregated_Material.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_petFood_001_Remeshed_Aggregated_Material.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_petFoodGroup_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_packagedProducts3": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-1.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-mk_packagedProducts.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_packagedProducts3_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "Thermometer": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/lambert1_Base_Color.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/lambert1_Metallic-lambert1_Roughness.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/lambert1_Normal_OpenGL.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_thermometers_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "Supplies": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1-1.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2-1.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_supplies_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "Drugs": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0-1.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3-Image_1.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2-2.png",
-      "ambientTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_3-Image_1.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_drugsBoxes_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "Cosmetics boxes_Agg_Aggregated_Material": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Cosmetics%20boxes_Agg_Aggregated_Material_diffuse.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Cosmetics%20boxes_Agg_Aggregated_Material_metalness-Cosmetics%20boxes_Agg_Aggregated_Material_roughness.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Cosmetics%20boxes_Agg_Aggregated_Material_normal.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_cosmeticBoxes_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "Pallet": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_0-2.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_1-2.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Image_2-3.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_woodenPallets_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "Medkit_Agg": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Medkit_Aggregated_Material_diffuse.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Medkit_Aggregated_Material_metalness-Medkit_Aggregated_Material_roughness.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Medkit_Aggregated_Material_normal.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_medkits_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Apples_01": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Apple1_u1_v1_diffuse.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Floor%20Dirt%20%202.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Apple1_u1_v1_normal.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_apples_01_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_Apples_02": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Apple2_u1_v1_diffuse.jpg",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Floor%20Dirt%20%202.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/Apple2_u1_v1_normal.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_apples_02_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_packagedProducts2": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-1.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-mk_packagedProducts.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_packagedProducts2_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "mk_packagedProducts1": {
-      "albedoTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-1.png",
-      "metallicTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts-mk_packagedProducts.png",
-      "bumpTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/warehouse/mk_packagedProducts.png",
-      "lightmapTexture": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/3ec99bfd-ab61-4ee2-ae98-93fed29041fd/Lightmaps/mk_packagedProducts1_lightmap.png",
-      "useLightmapAsShadowmap": true
-    },
-    "__GLTFLoader._default": {
-      "wireframe": false
-    }
-  },
-  "deletedMaterials": [
-    "83cb0d45-db0d-4654-ade8-68e2cbe92a58::mat::2269",
-    "bd6d95de-d6f3-42b0-8b2e-84c9c523492c::mat::2272",
-    "ab772124-c035-4e2d-8302-04842022ef41::mat::2713",
-    "d4327a08-28fe-4195-8869-09b5feefedf1::mat::2262",
-    "80fa77fb-d9e7-4c74-9a7d-1786642c02e4::mat::2278"
-  ]
+  "materialOverrides": {}
 }
