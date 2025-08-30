@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneVersion": 303,
+  "sceneVersion": 438,
   "sceneSettings": {
     "environment": {
       "clearColor": [
@@ -67,9 +67,9 @@
       "name": "Camera",
       "transform": {
         "position": [
-          8.65,
-          5,
-          -8.65
+          3.751582509376589e-16,
+          4.024179458618164,
+          -6.126798629760742
         ],
         "rotation": [
           0,
@@ -85,15 +85,15 @@
         "maxZ": 100,
         "fov": 0.7853981633974483,
         "alpha": -1.5707963267948966,
-        "beta": 1.2566370614359172,
-        "radius": 15,
+        "beta": 1.4955498551305797,
+        "radius": 6.1441847835716965,
         "target": [
           0,
-          0,
+          3.559769630432129,
           0
         ],
-        "targetMode": "position",
-        "targetObject": null
+        "targetMode": "object",
+        "targetObject": "c2f125cf-958e-497b-944d-6f10b710ea49"
       }
     },
     {
@@ -394,7 +394,7 @@
       "transform": {
         "position": [
           0,
-          0,
+          2.5108492374420166,
           0
         ],
         "rotation": [
@@ -553,6 +553,37 @@
             "key": "Space"
           }
         }
+      }
+    },
+    {
+      "id": "541944da-771d-4bad-bc08-515f2e09846e",
+      "kind": "audio",
+      "name": "Audio_03",
+      "transform": {
+        "position": [
+          0,
+          2.5,
+          60.08053970336914
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true,
+      "enabled": true,
+      "audio": {
+        "volume": 1,
+        "loop": true,
+        "spatialAudio": true,
+        "radius": 10,
+        "audioFile": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/calm-elevator-music-music-157584855_nw_prev.m4a"
       }
     }
   ],
