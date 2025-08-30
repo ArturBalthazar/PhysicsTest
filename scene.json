@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneVersion": 530,
+  "sceneVersion": 531,
   "sceneSettings": {
     "environment": {
       "clearColor": [
@@ -82,7 +82,7 @@
         "type": "ArcRotate",
         "active": true,
         "minZ": 0.1,
-        "maxZ": 100,
+        "maxZ": 10000,
         "fov": 0.7853981633974483,
         "alpha": -1.5707963267948966,
         "beta": 1.4955498551305797,
