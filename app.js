@@ -1718,7 +1718,7 @@
 
       // Create BVH triangle mesh shape
       const shape = new Ammo.btBvhTriangleMeshShape(ammoMesh, true, true);
-      shape.setLocalScaling(new Ammo.btVector3(scale.x, scale.y, scale.z));
+      shape.setLocalScaling(new Ammo.btVector3(-scale.x, scale.y, scale.z));
 
       // Create transform
       const transform = new Ammo.btTransform();
