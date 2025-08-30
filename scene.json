@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneVersion": 438,
+  "sceneVersion": 530,
   "sceneSettings": {
     "environment": {
       "clearColor": [
@@ -88,9 +88,9 @@
         "beta": 1.4955498551305797,
         "radius": 6.1441847835716965,
         "target": [
-          0,
-          3.559769630432129,
-          0
+          101.19597625732422,
+          8.401095390319824,
+          136.66615295410156
         ],
         "targetMode": "object",
         "targetObject": "c2f125cf-958e-497b-944d-6f10b710ea49"
@@ -486,9 +486,9 @@
       "name": "Cone",
       "transform": {
         "position": [
-          0,
-          3.559769630432129,
-          0
+          101.19597625732422,
+          8.401095390319824,
+          136.66615295410156
         ],
         "rotation": [
           0,
