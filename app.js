@@ -31,6 +31,13 @@
   // Performance monitoring
   let fpsCounter = null;
   let lastFpsUpdate = 0;
+  
+  // PATCH: helpers for child-mesh IDs (same as viewer.js)
+  const MESH_TAG = '::mesh::';
+  function getChildTokenFromId(id) {
+    const i = id.lastIndexOf(MESH_TAG);
+    return i >= 0 ? id.slice(i + MESH_TAG.length) : null;
+  }
 
   // Show loading
   function showLoading(message) {
@@ -720,12 +727,6 @@
           // Check if this is a child mesh (contains ::mesh::)
           if (node.id.includes('::mesh::') && node.parentId) {
             // Child mesh - find by stableId (with legacy numeric fallback)
-            const MESH_TAG = '::mesh::';
-            function getChildTokenFromId(id) {
-              const i = id.lastIndexOf(MESH_TAG);
-              return i >= 0 ? id.slice(i + MESH_TAG.length) : null;
-            }
-            
             const token = getChildTokenFromId(node.id);
             if (token) {
               // Primary: find by stableId
@@ -746,6 +747,12 @@
                   mesh.rotation = rotation;
                 }
                 mesh.scaling = scaling;
+                
+                // Apply physics if object has physics properties
+                if (node.physics && node.physics.enabled && scene.getPhysicsEngine()) {
+                  console.log('🔷 Applying physics to child mesh:', node.physics.type, node.physics.impostor);
+                  applyPhysicsToObject(mesh, node.physics, scene, node);
+                }
               } else {
                 console.warn('⚠️ RUNTIME: Child mesh not found (stableId/legacy):', node.id);
               }
@@ -766,7 +773,7 @@
             // Apply physics if object has physics properties
             if (node.physics && node.physics.enabled && scene.getPhysicsEngine()) {
               console.log('🔷 Applying physics to cube:', node.physics.type, node.physics.impostor);
-              applyPhysicsToObject(mesh, node.physics, scene);
+              applyPhysicsToObject(mesh, node.physics, scene, node);
             }
           } else if (node.id === 'ground') {
             mesh = BABYLON.MeshBuilder.CreateGround(node.id, { width: 6, height: 6 }, scene);
@@ -784,7 +791,7 @@
             // Apply physics if object has physics properties
             if (node.physics && node.physics.enabled && scene.getPhysicsEngine()) {
               console.log('🔷 Applying physics to ground:', node.physics.type, node.physics.impostor);
-              applyPhysicsToObject(mesh, node.physics, scene);
+              applyPhysicsToObject(mesh, node.physics, scene, node);
             }
           } else if (node.metadata && node.metadata.primitiveType) {
             // Handle primitive meshes created by addPrimitiveMesh
@@ -828,7 +835,7 @@
               // Apply physics if object has physics properties
               if (node.physics && node.physics.enabled && scene.getPhysicsEngine()) {
                 console.log('🔷 Applying physics to ' + primitiveType + ':', node.physics.type, node.physics.impostor);
-                applyPhysicsToObject(mesh, node.physics, scene);
+                applyPhysicsToObject(mesh, node.physics, scene, node);
               }
             }
           }
@@ -851,7 +858,7 @@
               console.log('🔷 Applying physics to model ' + node.name + ':', node.physics.type, node.physics.impostor);
               const rootMesh = scene.getNodeById(node.id);
               if (rootMesh) {
-                applyPhysicsToObject(rootMesh, node.physics, scene);
+                applyPhysicsToObject(rootMesh, node.physics, scene, node);
               }
             }
           }
@@ -1603,20 +1610,45 @@
   }
 
   // Apply physics properties to a single object (from viewer.js)
-  function applyPhysicsToObject(babylonObject, physicsProps, scene) {
+  function applyPhysicsToObject(babylonObject, physicsProps, scene, node = null) {
     if (!babylonObject || !physicsProps) return;
     
     try {
+      let targetMesh = babylonObject;
+      
+      // Handle child meshes from imported GLB files (using the established pattern)
+      if (node && node.id.includes(MESH_TAG) && node.parentId) {
+        const token = getChildTokenFromId(node.id);
+        
+        if (token) {
+          // Primary: find by stableId in metadata
+          targetMesh = scene.meshes.find(m => m.metadata && m.metadata.stableId === token);
+          
+          // Legacy fallback: find by numeric uniqueId  
+          if (!targetMesh && /^\d+$/.test(token)) {
+            const uniq = parseInt(token, 10);
+            targetMesh = scene.meshes.find(m => m.uniqueId === uniq);
+          }
+          
+          if (targetMesh) {
+            console.log('🎯 Resolved child mesh for physics:', targetMesh.name, 'from token:', token);
+          } else {
+            console.warn('⚠️ Could not resolve child mesh for token:', token);
+            return;
+          }
+        }
+      }
+      
       // Remove existing impostor if any
-      if (babylonObject.physicsImpostor) {
-        babylonObject.physicsImpostor.dispose();
-        babylonObject.physicsImpostor = null;
+      if (targetMesh.physicsImpostor) {
+        targetMesh.physicsImpostor.dispose();
+        targetMesh.physicsImpostor = null;
       }
       
       // Check if this should be a raw Ammo collider (meshCollider type or legacy isCollider flag)
-      if (physicsProps.impostor === 'meshCollider' || (physicsProps.isCollider && isImportedMesh(babylonObject))) {
-        console.log('🔷 Creating raw Ammo collider for mesh:', babylonObject.name);
-        createRawAmmoCollider(babylonObject, physicsProps);
+      if (physicsProps.impostor === 'meshCollider' || (physicsProps.isCollider && isImportedMesh(targetMesh))) {
+        console.log('🔷 Creating raw Ammo collider for mesh:', targetMesh.name);
+        createRawAmmoCollider(targetMesh, physicsProps);
         return;
       }
       
@@ -1648,8 +1680,8 @@
       };
       
       // Create physics impostor
-      babylonObject.physicsImpostor = new BABYLON.PhysicsImpostor(
-        babylonObject,
+      targetMesh.physicsImpostor = new BABYLON.PhysicsImpostor(
+        targetMesh,
         impostorType,
         impostorOptions,
         scene
@@ -1658,16 +1690,16 @@
       // Apply additional physics properties
       if (physicsProps.isTrigger) {
         // For triggers, disable collision response
-        const physicsBody = babylonObject.physicsImpostor.physicsBody;
+        const physicsBody = targetMesh.physicsImpostor.physicsBody;
         if (physicsBody && physicsBody.setCollisionFlags) {
           physicsBody.setCollisionFlags(4); // Trigger flag
         }
       }
       
-      console.log('🔷 Created ' + physicsProps.type + ' ' + physicsProps.impostor + ' impostor with mass ' + mass);
+      console.log('🔷 Created ' + physicsProps.type + ' ' + physicsProps.impostor + ' impostor with mass ' + mass + ' on ' + targetMesh.name);
       
     } catch (error) {
-      console.error('❌ Failed to apply physics to ' + babylonObject.name + ':', error);
+      console.error('❌ Failed to apply physics to ' + targetMesh.name + ':', error);
     }
   }
 
