@@ -1,104 +1,71 @@
 {
-  "version": 1,
-  "sceneVersion": 644,
-  "sceneSettings": {
-    "environment": {
-      "clearColor": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "ambientColor": [
-        0,
-        0,
-        0
-      ],
-      "useIBL": false,
-      "iblPath": null,
-      "iblIntensity": 1,
-      "useSkybox": false,
-      "skyboxType": "none",
-      "skyboxPanoramaPath": null,
-      "skyboxMaterial": "fromIBL",
-      "skyboxTextures": {
-        "nx": null,
-        "ny": null,
-        "nz": null,
-        "px": null,
-        "py": null,
-        "pz": null
+  "materialOverrides": {
+    "Material_02": {
+      "albedoColor": {
+        "b": 1,
+        "g": 1,
+        "r": 1
       },
-      "fogMode": "none"
-    },
-    "imageProcessing": {
-      "contrast": 1,
-      "exposure": 1,
-      "toneMappingEnabled": false,
-      "toneMappingType": "standard",
-      "vignetteEnabled": false,
-      "vignetteWeight": 1,
-      "vignetteStretch": 0,
-      "vignetteFov": 1.5,
-      "vignetteColor": [
-        0,
-        0,
-        0,
-        1
-      ],
-      "ditheringEnabled": false,
-      "ditheringIntensity": 0.5
-    },
-    "physics": {
-      "enabled": true,
-      "gravity": [
-        0,
-        -9.81,
-        0
-      ],
-      "timeStep": 0.016666666666666666,
-      "iterations": 10
+      "albedoTexture": "972eb0cb-8ae4-4510-934d-dd5e2754f165/projects/c162a2cc-afdd-42da-b6e2-598d8b26dbbe/assets/image.png",
+      "metallic": 1,
+      "roughness": 0.12
     }
   },
   "nodes": [
     {
+      "camera": {
+        "active": true,
+        "alpha": -3.835130964406488,
+        "beta": 1.2276829792761537,
+        "fov": 0.7853981633974483,
+        "maxZ": 100,
+        "minZ": 0.1,
+        "radius": 14.672993311913128,
+        "target": [
+          -1.9987385272979736,
+          4.273131370544434,
+          -0.6423121690750122
+        ],
+        "targetMode": "object",
+        "targetObject": "8ed9814d-d071-4200-a73a-ba1589d98065",
+        "type": "ArcRotate"
+      },
+      "enabled": true,
       "id": "camera1",
       "kind": "camera",
       "name": "Camera",
       "transform": {
         "position": [
-          3.751582509376589e-16,
-          4.024179458618164,
-          -6.126798629760742
+          8.65,
+          5,
+          -8.65
         ],
         "rotation": [
           0,
           0,
           0
         ]
-      },
-      "enabled": true,
-      "camera": {
-        "type": "ArcRotate",
-        "active": true,
-        "minZ": 0.1,
-        "maxZ": 10000,
-        "fov": 0.7853981633974483,
-        "alpha": -1.5707963267948966,
-        "beta": 1.4955498551305797,
-        "radius": 6.1441847835716965,
-        "target": [
-          -1.0535354614257812,
-          8.401095390319824,
-          -9.645577430725098
-        ],
-        "targetMode": "object",
-        "targetObject": "c2f125cf-958e-497b-944d-6f10b710ea49"
       }
     },
     {
+      "enabled": true,
       "id": "light1",
       "kind": "light",
+      "light": {
+        "color": [
+          1,
+          1,
+          1
+        ],
+        "enabled": true,
+        "groundColor": [
+          0.3,
+          0.3,
+          0.3
+        ],
+        "intensity": 0.7,
+        "type": "Hemispheric"
+      },
       "name": "Light",
       "transform": {
         "position": [
@@ -111,33 +78,18 @@
           0,
           0
         ]
-      },
-      "enabled": true,
-      "light": {
-        "type": "Hemispheric",
-        "intensity": 0.7,
-        "color": [
-          1,
-          1,
-          1
-        ],
-        "enabled": true,
-        "groundColor": [
-          0.3,
-          0.3,
-          0.3
-        ]
       }
     },
     {
+      "enabled": true,
       "id": "defaultCube",
       "kind": "mesh",
       "name": "Cube",
       "transform": {
         "position": [
-          5.139887809753418,
+          5.3769426345825195,
           1,
-          2.7061550617218018
+          2.3003251552581787
         ],
         "scaling": [
           1,
@@ -145,16 +97,26 @@
           1
         ]
       },
-      "visible": true,
-      "enabled": true
+      "visible": true
     },
     {
+      "enabled": true,
       "id": "ground",
       "kind": "mesh",
       "name": "Ground Plane",
+      "physics": {
+        "enabled": true,
+        "friction": 0.5,
+        "impostor": "mesh",
+        "isCollider": false,
+        "isTrigger": false,
+        "mass": 1,
+        "restitution": 0.3,
+        "type": "static"
+      },
       "transform": {
         "position": [
-          24.16706657409668,
+          0,
           0,
           0
         ],
@@ -164,295 +126,19 @@
           3
         ]
       },
-      "visible": true,
-      "enabled": true
+      "visible": true
     },
     {
-      "id": "root::samsungbeach-water-v6",
+      "enabled": true,
+      "id": "root::samsungbeach-grass-v6",
       "kind": "model",
-      "name": "SamsungBeach_Water_v6",
-      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/SamsungBeach_Water_v6.glb",
-      "transform": {
-        "position": [
-          11.911542892456055,
-          -0.7116209864616394,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
       "metadata": {
-        "assetId": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/SamsungBeach_Water_v6.glb",
-        "file": "SamsungBeach_Water_v6.glb",
-        "importedAsset": true
-      }
-    },
-    {
-      "id": "root::samsungbeach-water-v6::mesh::mk-water-fsh0kj",
-      "kind": "mesh",
-      "name": "mk_water",
-      "parentId": "root::samsungbeach-water-v6",
-      "transform": {
-        "position": [
-          33.17962646484375,
-          3.359828472137451,
-          124.3912353515625
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::samsungbeach-water-v6",
-        "sourceMeshName": "mk_water"
-      },
-      "physics": {
-        "enabled": true,
-        "type": "static",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "meshCollider",
-        "isCollider": false,
-        "isTrigger": false
-      }
-    },
-    {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive0-c8m4v2",
-      "kind": "mesh",
-      "name": "avaturn_look_0_primitive0",
-      "parentId": "root::avatar",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::avatar",
-        "sourceMeshName": "avaturn_look_0_primitive0"
-      }
-    },
-    {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive1-bhagjp",
-      "kind": "mesh",
-      "name": "avaturn_look_0_primitive1",
-      "parentId": "root::avatar",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::avatar",
-        "sourceMeshName": "avaturn_look_0_primitive1"
-      }
-    },
-    {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive2-w34h96",
-      "kind": "mesh",
-      "name": "avaturn_look_0_primitive2",
-      "parentId": "root::avatar",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::avatar",
-        "sourceMeshName": "avaturn_look_0_primitive2"
-      }
-    },
-    {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive3-65x4ws",
-      "kind": "mesh",
-      "name": "avaturn_look_0_primitive3",
-      "parentId": "root::avatar",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::avatar",
-        "sourceMeshName": "avaturn_look_0_primitive3"
-      }
-    },
-    {
-      "id": "root::avatar::mesh::avaturn-look-0-primitive4-2n3wzu",
-      "kind": "mesh",
-      "name": "avaturn_look_0_primitive4",
-      "parentId": "root::avatar",
-      "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "importedAsset": true,
-        "sourceModelId": "root::avatar",
-        "sourceMeshName": "avaturn_look_0_primitive4"
-      }
-    },
-    {
-      "id": "4083ee69-ae09-4911-ba62-e963f2819c14",
-      "kind": "audio",
-      "name": "Audio",
-      "transform": {
-        "position": [
-          0,
-          2.5108492374420166,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          1,
-          1,
-          1
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "audio": {
-        "volume": 1,
-        "loop": true,
-        "spatialAudio": true,
-        "radius": 10,
-        "audioFile": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/calm-elevator-music-music-157584855_nw_prev.m4a"
-      }
-    },
-    {
-      "id": "root::avatar",
-      "kind": "model",
-      "name": "avatar",
-      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/avatar.glb",
-      "transform": {
-        "position": [
-          0,
-          -1.0178053379058838,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scaling": [
-          2,
-          1,
-          2
-        ]
-      },
-      "visible": true,
-      "enabled": true,
-      "metadata": {
-        "assetId": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/avatar.glb",
-        "file": "avatar.glb",
+        "assetId": "6f5ad133-a3bf-45a5-9438-12483dff116e",
+        "file": "SamsungBeach_Grass_v6.glb",
         "importedAsset": true
       },
-      "parentId": "c2f125cf-958e-497b-944d-6f10b710ea49"
-    },
-    {
-      "id": "b061ac7d-5b0e-4a69-999b-5f8c4cb68285",
-      "kind": "audio",
-      "name": "Audio_02",
+      "name": "SamsungBeach_Grass_v6",
+      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/Models/0490597f-69b2-446b-97c8-773fdec2da17_SamsungBeach_Grass_v6.glb",
       "transform": {
         "position": [
           0,
@@ -470,25 +156,24 @@
           1
         ]
       },
-      "visible": true,
-      "enabled": true,
-      "audio": {
-        "volume": 1,
-        "loop": true,
-        "spatialAudio": false,
-        "radius": 10,
-        "audioFile": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/industry-warehouse-large-factory-warehouse-sound-effect-167909183_nw_prev.m4a"
-      }
+      "visible": true
     },
     {
-      "id": "c2f125cf-958e-497b-944d-6f10b710ea49",
+      "enabled": true,
+      "id": "root::samsungbeach-grass-v6::mesh::mk-grass-366ums",
       "kind": "mesh",
-      "name": "Cone",
+      "metadata": {
+        "importedAsset": true,
+        "sourceMeshName": "mk_grass",
+        "sourceModelId": "root::samsungbeach-grass-v6"
+      },
+      "name": "mk_grass",
+      "parentId": "root::samsungbeach-grass-v6",
       "transform": {
         "position": [
-          -1.0535354614257812,
-          8.401095390319824,
-          -9.645577430725098
+          1.2455978393554688,
+          -0.2135307788848877,
+          1.1843414306640625
         ],
         "rotation": [
           0,
@@ -496,96 +181,290 @@
           0
         ],
         "scaling": [
-          0.5,
           1,
-          0.5
+          1,
+          1
         ]
       },
-      "visible": true,
+      "visible": true
+    },
+    {
       "enabled": true,
+      "id": "root::samsungbeach-zflip-v7",
+      "kind": "model",
       "metadata": {
-        "primitiveType": "cone",
-        "materialName": "Material"
+        "assetId": "2c1b99d7-e537-4246-8ddb-2b13293f5fe1",
+        "file": "SamsungBeach_ZFlip_v7.glb",
+        "importedAsset": true
       },
-      "physics": {
-        "enabled": true,
-        "type": "dynamic",
-        "mass": 1,
-        "restitution": 0.3,
-        "friction": 0.5,
-        "impostor": "capsule",
-        "isCollider": false,
-        "isTrigger": false
+      "name": "SamsungBeach_ZFlip_v7",
+      "src": "867a8a57-eee4-40db-a3b8-7d15faa374e3/Models/df440a4a-6f87-4c54-b545-1a02a679f8f0_SamsungBeach_ZFlip_v7.glb",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
       },
+      "visible": true
+    },
+    {
+      "enabled": true,
+      "id": "root::samsungbeach-zflip-v7::mesh::mk-coloratlas-koazu3",
+      "kind": "mesh",
+      "metadata": {
+        "importedAsset": true,
+        "sourceMeshName": "mk_ColorAtlas",
+        "sourceModelId": "root::samsungbeach-zflip-v7"
+      },
+      "name": "mk_ColorAtlas",
+      "parentId": "root::samsungbeach-zflip-v7",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true
+    },
+    {
+      "enabled": true,
+      "id": "root::samsungbeach-zflip-v7::mesh::mk-textured-aggregated-3zc771",
+      "kind": "mesh",
+      "metadata": {
+        "importedAsset": true,
+        "sourceMeshName": "mk_Textured_Aggregated",
+        "sourceModelId": "root::samsungbeach-zflip-v7"
+      },
+      "name": "mk_Textured_Aggregated",
+      "parentId": "root::samsungbeach-zflip-v7",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true
+    },
+    {
+      "enabled": true,
+      "id": "root::arrow",
+      "kind": "model",
+      "metadata": {
+        "assetId": "972eb0cb-8ae4-4510-934d-dd5e2754f165/projects/c162a2cc-afdd-42da-b6e2-598d8b26dbbe/assets/Arrow.glb",
+        "file": "Arrow.glb",
+        "importedAsset": true
+      },
+      "name": "Arrow",
+      "src": "972eb0cb-8ae4-4510-934d-dd5e2754f165/projects/c162a2cc-afdd-42da-b6e2-598d8b26dbbe/assets/Arrow.glb",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          -1.0690101851020213,
+          0
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true
+    },
+    {
+      "enabled": true,
+      "id": "root::arrow::mesh::arrow-001-60wnm4",
+      "kind": "mesh",
+      "metadata": {
+        "importedAsset": true,
+        "sourceMeshName": "Arrow.001",
+        "sourceModelId": "root::arrow"
+      },
+      "name": "Arrow.001",
+      "parentId": "root::arrow",
+      "transform": {
+        "position": [
+          -2.6570839881896973,
+          2.780214309692383,
+          0.7509764432907104
+        ],
+        "rotation": [
+          0,
+          0,
+          1.5714944584956945
+        ],
+        "scaling": [
+          1,
+          1,
+          1
+        ]
+      },
+      "visible": true
+    },
+    {
+      "enabled": true,
+      "id": "8ed9814d-d071-4200-a73a-ba1589d98065",
       "inputControl": {
-        "locomotionType": "Grounded Avatar",
         "active": true,
-        "idleAnimationId": "idle",
-        "idleAnimationName": "idle",
+        "backward": {
+          "keyBinding": {
+            "key": "KeyE"
+          }
+        },
         "forward": {
           "keyBinding": {
             "key": "KeyW"
-          },
-          "animationId": "walk",
-          "animationName": "walk"
-        },
-        "turnLeft": {
-          "keyBinding": {
-            "key": "KeyD"
-          },
-          "animationId": "walk",
-          "animationName": "walk"
-        },
-        "turnRight": {
-          "keyBinding": {
-            "key": "KeyA"
-          },
-          "animationId": "walk",
-          "animationName": "walk"
-        },
-        "backward": {
-          "keyBinding": {},
-          "animationId": "walk_backward",
-          "animationName": "walk_backward"
+          }
         },
         "jump": {
           "keyBinding": {
             "key": "Space"
           }
+        },
+        "locomotionType": "Grounded Avatar",
+        "turnLeft": {
+          "keyBinding": {
+            "key": "KeyA"
+          }
+        },
+        "turnRight": {
+          "keyBinding": {
+            "key": "KeyD"
+          }
         }
-      }
-    },
-    {
-      "id": "541944da-771d-4bad-bc08-515f2e09846e",
-      "kind": "audio",
-      "name": "Audio_03",
+      },
+      "kind": "mesh",
+      "metadata": {
+        "materialName": "Material_02",
+        "primitiveType": "sphere"
+      },
+      "name": "Sphere",
+      "physics": {
+        "enabled": true,
+        "friction": 0.5,
+        "impostor": "sphere",
+        "isCollider": false,
+        "isTrigger": false,
+        "mass": 1,
+        "restitution": 0.3,
+        "type": "dynamic"
+      },
       "transform": {
         "position": [
-          0,
-          2.5,
-          60.08053970336914
+          -1.9987385272979736,
+          4.273131370544434,
+          -0.6423121690750122
         ],
         "rotation": [
-          0,
-          0,
-          0
+          0.8144155974482846,
+          -0.19310949320908044,
+          1.996595587104385e-7
         ],
         "scaling": [
-          1,
-          1,
-          1
+          0.795576810836792,
+          0.795576810836792,
+          0.795576810836792
         ]
       },
-      "visible": true,
-      "enabled": true,
-      "audio": {
-        "volume": 1,
-        "loop": true,
-        "spatialAudio": true,
-        "radius": 10,
-        "audioFile": "867a8a57-eee4-40db-a3b8-7d15faa374e3/projects/8cf9a53b-48f5-4c3a-b548-abd0ba781e1a/calm-elevator-music-music-157584855_nw_prev.m4a"
-      }
+      "visible": true
     }
   ],
-  "materialOverrides": {}
+  "sceneSettings": {
+    "environment": {
+      "ambientColor": [
+        0,
+        0,
+        0
+      ],
+      "clearColor": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "fogMode": "none",
+      "iblIntensity": 1.38,
+      "iblPath": "972eb0cb-8ae4-4510-934d-dd5e2754f165/projects/c162a2cc-afdd-42da-b6e2-598d8b26dbbe/assets/environment02.env",
+      "skyboxMaterial": "fromIBL",
+      "skyboxPanoramaPath": "embedded:root::samsungbeach-zflip-v7::mesh::mk-textured-aggregated-3zc771::mat::34::tex::35",
+      "skyboxTextures": {
+        "nx": null,
+        "ny": null,
+        "nz": null,
+        "px": null,
+        "py": null,
+        "pz": null
+      },
+      "skyboxType": "panoramic",
+      "useIBL": true,
+      "useSkybox": true
+    },
+    "imageProcessing": {
+      "contrast": 0.89,
+      "ditheringEnabled": false,
+      "ditheringIntensity": 0.5,
+      "exposure": 0.75,
+      "toneMappingEnabled": true,
+      "toneMappingType": "aces",
+      "vignetteColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "vignetteEnabled": false,
+      "vignetteFov": 1.5,
+      "vignetteStretch": 0,
+      "vignetteWeight": 1
+    },
+    "physics": {
+      "enabled": true,
+      "gravity": [
+        0,
+        -9.81,
+        0
+      ],
+      "iterations": 10,
+      "timeStep": 0.016666666666666666
+    }
+  },
+  "sceneVersion": 496,
+  "version": 1
 }
